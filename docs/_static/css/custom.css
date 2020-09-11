@@ -1,0 +1,11 @@
+.wy-nav-content {
+    max-width: 1000px !important;
+}
+
+.wy-side-nav-search {
+    background-color: #2980b9 !important;
+}
+
+.wy-side-nav-search > div.version {
+    color: rgba(255, 255, 255, 0.3) !important;
+}
