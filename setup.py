@@ -9,7 +9,9 @@ def read_md(file):
 setup(
     name="elaspic-v2",
     version="0.1.0",
-    description="Predicting the effect of mutations on protein folding and protein-protein interaction.",
+    description=(
+        "Predicting the effect of mutations on protein folding and protein-protein interaction."
+    ),
     long_description=read_md("README.md"),
     author="Alexey Strokach",
     author_email="alex.strokach@utoronto.ca",
