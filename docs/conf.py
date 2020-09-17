@@ -40,6 +40,7 @@ import elaspic_v2
 
 gitlab_doc_root = "https://gitlab.com/ostrokach/elaspic-v2/-/tree/master/"
 
+
 def setup(app):
     app.add_stylesheet("css/custom.css")
     app.add_config_value(
@@ -55,6 +56,7 @@ def setup(app):
         True,
     )
     app.add_transform(AutoStructify)
+
 
 # If your documentation needs a minimal Sphinx version, state it here.
 # needs_sphinx = "1.0"
