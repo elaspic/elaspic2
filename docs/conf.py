@@ -34,7 +34,7 @@ project_root = os.path.dirname(cwd)
 # version is used.
 # sys.path.insert(0, project_root)
 
-import elaspic_v2
+import ev2
 
 # -- General configuration ---------------------------------------------
 
