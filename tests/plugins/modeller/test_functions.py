@@ -6,7 +6,7 @@ import pytest
 from kmtools import structure_tools
 from kmtools.structure_tools import DomainTarget
 
-from tkpod.plugins.modeller import run_modeller
+from ev2.plugins.modeller import run_modeller
 
 TESTS_DIR = Path(__file__).absolute().parent
 
@@ -48,7 +48,10 @@ def test_run_modeller(structure_file: Path, targets: DomainTarget, num_hetatms: 
         assert [c.id for c in structure_bm[0]] == structure_tools.CHAIN_IDS[:num_chains]
     # Make sure we have expected sequence(s)
     for chain, target in zip(structure_bm.chains, targets):
-        assert structure_tools.get_chain_sequence(chain) == target.target_sequence
+        assert (
+            structure_tools.get_chain_sequence(chain, if_unknown="replace")
+            == target.target_sequence
+        )
     assert len(list(list(structure_fm[0].chains)[-1].residues)) == num_hetatms
     # Make sure we have expected result fields
     for key in ["name", "Normalized DOPE score", "GA341 score"]:

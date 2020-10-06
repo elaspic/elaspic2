@@ -37,15 +37,15 @@ def to_rosetta_coords(structure: Structure, mutation: Mutation) -> Mutation:
         for residue in chain:
             if residue.resname in pdb_residues:
                 residue_idx_offset += 1
-    mutation = mutation._replace(residue_idx=mutation.residue_idx + residue_idx_offset)
+    mutation = mutation._replace(residue_id=mutation.residue_id + residue_idx_offset)
     return mutation
 
 
 def write_mutation_file(mut: Mutation, temp_dir: Path) -> Path:
     """Write a mutation file recognized by Rosetta inside `temp_dir`."""
-    mutation_file = temp_dir.joinpath("{}{}{}.txt".format(*mut[1:4]))
+    mutation_file = temp_dir.joinpath("{}{}{}.txt".format(*mut[2:5]))
     with open(mutation_file, "w") as ofh:
-        ofh.write("total 1\n" "1\n" f"{mut.residue_wt} {mut.residue_idx + 1} {mut.residue_mut}\n")
+        ofh.write("total 1\n" "1\n" f"{mut.residue_wt} {mut.residue_id} {mut.residue_mut}\n")
     return mutation_file
 
 

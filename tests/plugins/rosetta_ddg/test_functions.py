@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from tkpod.plugins.rosetta_ddg.functions import parse_cartesian_ddg_file, parse_ddg_monomer_file
+from ev2.plugins.rosetta_ddg.functions import parse_cartesian_ddg_file, parse_ddg_monomer_file
 
 TESTS_DIR = Path(__file__).absolute().parent
 
