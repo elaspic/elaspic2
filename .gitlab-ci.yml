@@ -122,6 +122,7 @@ test:
     # Create conda environment
     - export LOCAL_CONDA_ENV="file://${CI_PROJECT_DIR}/conda-bld"
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
+    - cat .gitlab/conda-env/environment-subst.yml
     - conda env create -q -n ${CONDA_ENVIRONMENT} -f .gitlab/conda-env/environment-subst.yml
     - conda activate ${CONDA_ENVIRONMENT}
 
