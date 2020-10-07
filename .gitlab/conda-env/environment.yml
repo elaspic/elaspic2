@@ -14,7 +14,7 @@ dependencies:
   # Biology
   - biopython =1.78
   - kimlab::kmbio =2.1.0
-  - kimlab::kmtools =0.2.8
+  - kimlab::kmtools =0.2.7
   - mdtraj =1.9.4
   - pyrosetta =2020.40+release.f01fa77
   - salilab::modeller =9.25
