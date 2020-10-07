@@ -48,9 +48,7 @@ def test_correct_residue(structure: Path, mutation: str, is_correct: bool):
             if "ERROR: Assertion `pose.residue(resnum).name1() == wt` failed" in line:
                 raise ResidueMismatchError
 
-    with unittest.mock.patch(
-        "ev2.plugins.rosetta_ddg.rosetta_ddg.subprocess.run", subprocess_run
-    ):
+    with unittest.mock.patch("ev2.plugins.rosetta_ddg.rosetta_ddg.subprocess.run", subprocess_run):
         with pytest.raises(ResidueMatchError if is_correct else ResidueMismatchError):
             RosettaDDG.analyze_mutation(mutation, data)
 
