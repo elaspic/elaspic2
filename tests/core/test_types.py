@@ -1,5 +1,4 @@
 import pytest
-
 from kmtools.structure_tools import DomainMutation as Mutation
 
 
