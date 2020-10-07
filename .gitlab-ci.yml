@@ -42,60 +42,6 @@ variables:
         - omnia
       EOF
 
-# === Playground ===
-
-create-conda-env:
-  stage: lint
-  image: ubuntu:20.04
-  before_script:
-    # Install global dependencies
-    - apt-get update -y -qq -o=Dpkg::Use-Pty=0
-    - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync gettext-base
-
-    # Install ssh client
-    - "which ssh-agent || ( apt-get install -y -qq -o=Dpkg::Use-Pty=0 openssh-client -y )"
-    # - apk add openssh
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$KNOWN_HOSTS" >> ~/.ssh/known_hosts
-
-    # Test that ssh client works
-    - ssh strokach@conda-envs.proteinsolver.org "echo hello"
-
-    # Install conda
-    - curl -s -L https://repo.anaconda.com/miniconda/Miniconda3-py38_4.8.3-Linux-x86_64.sh > miniconda.sh
-    - md5sum miniconda.sh | grep d63adf39f2c220950a063e0529d4ff74
-    - sh miniconda.sh -b -p /opt/conda
-    - source /opt/conda/etc/profile.d/conda.sh
-    # - conda init
-    - conda activate root
-    - conda config --set channel_priority true # TODO: strict
-    - conda config --set pip_interop_enabled false
-    - conda install -n root -c conda-forge -y -q mamba conda-pack
-  script:
-    # Create conda environment
-    - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
-    - conda env create -q -n ${CONDA_ENVIRONMENT} -f .gitlab/conda-env/environment-subst.yml
-    - conda activate ${CONDA_ENVIRONMENT}
-
-    # Install pypi packages
-    - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
-
-    # Tests
-    - python -c "import torch_sparse"
-
-    # Pack the environment
-    - conda deactivate
-    - conda list -n ${CONDA_ENVIRONMENT}
-    - export ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_REF_NAME}.tar.gz
-    - conda pack -q -n ${CONDA_ENVIRONMENT} -o ${ENVIRONMENT_FILE}
-    - ls -lSh ${ENVIRONMENT_FILE}
-
-    # Upload the environment to shared folder
-    - rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CONDA_ENVIRONMENT}/
-
 # === Lint ===
 
 lint:
@@ -131,17 +77,8 @@ build:
 
 # === Test ===
 
-test:
-  stage: test
-  extends:
-    - .configure
-  script:
-    # Create conda environment for testing
-    - conda update -yq conda
-    - conda create -n test -q -c file://${CI_PROJECT_DIR}/conda-bld --strict-channel-priority
-      "python=${PYTHON_VERSION}" ${CI_PROJECT_NAME} pytest pytest-cov || true
-    - source activate test
-    # Run tests
+.run-tests:
+  script: &run-tests
     - PKG_INSTALL_DIR=$(python -c "import ev2; print(ev2.__path__[0])")
     - python -m pytest
       -c setup.cfg
@@ -149,9 +86,72 @@ test:
       --cov-config=setup.cfg
       --color=yes
       "tests/"
-    # Coverage
     - mkdir coverage
     - mv .coverage coverage/.coverage.all
+
+test:
+  stage: test
+  image: ubuntu:20.04
+  before_script:
+    # Install global dependencies
+    - apt-get update -y -qq -o=Dpkg::Use-Pty=0
+    - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync gettext-base
+
+    # Install ssh client
+    - "which ssh-agent || ( apt-get install -y -qq -o=Dpkg::Use-Pty=0 openssh-client -y )"
+    # - apk add openssh
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$KNOWN_HOSTS" >> ~/.ssh/known_hosts
+
+    # Test that ssh client works
+    - ssh strokach@conda-envs.proteinsolver.org "echo hello"
+
+    # Install conda
+    - curl -s -L https://repo.anaconda.com/miniconda/Miniconda3-py38_4.8.3-Linux-x86_64.sh > miniconda.sh
+    - md5sum miniconda.sh | grep d63adf39f2c220950a063e0529d4ff74
+    - sh miniconda.sh -b -p /opt/conda
+    - source /opt/conda/etc/profile.d/conda.sh
+    - conda activate root
+    - conda config --set channel_priority true # TODO: strict
+    - conda config --set pip_interop_enabled false
+    - conda install -n root -c conda-forge -y -q mamba conda-pack
+  script:
+    # Create conda environment
+    - export LOCAL_CONDA_ENV="file://${CI_PROJECT_DIR}/conda-bld"
+    - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
+    - mamba env create -q -n ${CONDA_ENVIRONMENT} -f .gitlab/conda-env/environment-subst.yml
+    - conda activate ${CONDA_ENVIRONMENT}
+
+    # Install pypi packages
+    - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
+
+    # Tests
+    - python -c "import torch_sparse"
+    - &run-tests
+
+    # Clean up
+    - conda deactivate
+  after_script:
+    # Skip unless building a release
+    - |
+      if [ "$CI_BUILD_REF_NAME" != "master" ]; then
+        echo "Skipping deploy for non-master branch $CI_BUILD_REF_NAME"
+        exit 0
+      fi
+
+    # Pack the environment
+    - conda list -n ${CONDA_ENVIRONMENT}
+    - export ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_REF_NAME}.tar.gz
+    - conda pack -q -n ${CONDA_ENVIRONMENT} -o ${ENVIRONMENT_FILE}
+    - ls -lSh ${ENVIRONMENT_FILE}
+
+    # Upload the environment to shared folder
+    - rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CONDA_ENVIRONMENT}/
+  dependencies:
+    - build
   artifacts:
     paths:
       - coverage

@@ -8,6 +8,8 @@ dependencies:
   - python =3.8
   - conda
   - pip
+  # Current package
+  - ${LOCAL_CONDA_ENV}::elaspic-v2 =${PACKAGE_VERSION}
   # Biology
   - biopython =1.78
   - kimlab::kmbio =2.1.0
@@ -19,6 +21,9 @@ dependencies:
   - anaconda::cudatoolkit =10.1.*
   - pytorch::pytorch =1.6.0
   # Binary files
-  - bioconda::mmseqs2
-  - bioconda::muscle
+  - bioconda::mmseqs2 =12.113e3
+  - bioconda::muscle =3.8.1551
   - rosetta::rosetta-ddg =3.12
+  # For testing
+  - pytest
+  - pytest-cov
