@@ -17,4 +17,4 @@ default_context:
     - docs/_templates/logo-image.html
     - docs/_templates/autosummary/class.rst
     - docs/_templates/autosummary/module.rst
-    - .ci/pages/templates/index.html
+    - .gitlab/pages/templates/index.html
