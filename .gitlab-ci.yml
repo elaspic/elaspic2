@@ -130,7 +130,7 @@ test:
 
     # Tests
     - python -c "import torch_sparse"
-    - &run-tests
+    - *run-tests
 
     # Clean up
     - conda deactivate
