@@ -78,6 +78,7 @@ create-conda-env:
   script:
     # Create conda environment
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment.yml
+    - cat .gitlab/conda-env/environment.yml
     - conda env create -q -n ${CI_PROJECT_NAME} -f .gitlab/conda-env/environment.yml
     - conda activate ${CI_PROJECT_NAME}
 
