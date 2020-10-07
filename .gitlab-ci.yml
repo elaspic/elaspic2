@@ -13,12 +13,8 @@ stages:
 
 variables:
   PACKAGE_VERSION: "0.1.0"
-
-.py37: &py37
-  PYTHON_VERSION: "3.7"
-
-.py38: &py38
   PYTHON_VERSION: "3.8"
+  CONDA_ENVIRONMENT: elaspic
 
 # === Configurations ===
 
@@ -55,6 +51,7 @@ create-conda-env:
     # Install global dependencies
     - apt-get update -y -qq -o=Dpkg::Use-Pty=0
     - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync gettext-base
+
     # Install ssh client
     - "which ssh-agent || ( apt-get install -y -qq -o=Dpkg::Use-Pty=0 openssh-client -y )"
     # - apk add openssh
@@ -63,8 +60,10 @@ create-conda-env:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$KNOWN_HOSTS" >> ~/.ssh/known_hosts
+
     # Test that ssh client works
     - ssh strokach@conda-envs.proteinsolver.org "echo hello"
+
     # Install conda
     - curl -s -L https://repo.anaconda.com/miniconda/Miniconda3-py38_4.8.3-Linux-x86_64.sh > miniconda.sh
     - md5sum miniconda.sh | grep d63adf39f2c220950a063e0529d4ff74
@@ -77,29 +76,25 @@ create-conda-env:
     - conda install -n root -c conda-forge -y -q mamba conda-pack
   script:
     # Create conda environment
-    - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment.yml
-    - cat .gitlab/conda-env/environment.yml
-    - conda env create -q -n ${CI_PROJECT_NAME} -f .gitlab/conda-env/environment.yml
-    - conda activate ${CI_PROJECT_NAME}
+    - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
+    - conda env create -q -n ${CONDA_ENVIRONMENT} -f .gitlab/conda-env/environment-subst.yml
+    - conda activate ${CONDA_ENVIRONMENT}
 
     # Install pypi packages
     - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
 
     # Tests
     - python -c "import torch_sparse"
-    - conda deactivate
-    - conda list -n ${CI_PROJECT_NAME}
 
     # Pack the environment
-    - export ENVIRONMENT_FILE=${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}.tar.gz
-    - conda pack -q -n ${CI_PROJECT_NAME} -o ${ENVIRONMENT_FILE}
+    - conda deactivate
+    - conda list -n ${CONDA_ENVIRONMENT}
+    - export ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_REF_NAME}.tar.gz
+    - conda pack -q -n ${CONDA_ENVIRONMENT} -o ${ENVIRONMENT_FILE}
     - ls -lSh ${ENVIRONMENT_FILE}
 
     # Upload the environment to shared folder
-    - rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CI_PROJECT_NAME}/
-  except:
-    variables:
-      - $UPDATE_IMAGES
+    - rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CONDA_ENVIRONMENT}/
 
 # === Lint ===
 
@@ -128,7 +123,6 @@ lint:
     - cd "${CI_PROJECT_DIR}/.gitlab/conda"
     - conda build .
       --variant-config-files /opt/conda/conda_build_config.yaml
-      --no-test
       --python $PYTHON_VERSION
       --output-folder "$CI_PROJECT_DIR/conda-bld"
   artifacts:
