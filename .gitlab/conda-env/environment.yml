@@ -1,6 +1,5 @@
 name: elaspic-v2
 channels:
-  - ${LOCAL_CONDA_ENV}
   - https://${KIMLAB_CONDA_LOGIN}@conda.proteinsolver.org
   - https://${PYROSETTA_CONDA_LOGIN}@conda.graylab.jhu.edu
   - conda-forge
@@ -10,8 +9,6 @@ dependencies:
   - python =3.8
   - conda
   - pip
-  # Current package
-  - elaspic-v2 =${PACKAGE_VERSION}
   # Biology
   - biopython =1.78
   - kimlab::kmbio =2.1.0

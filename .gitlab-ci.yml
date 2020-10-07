@@ -120,13 +120,13 @@ test:
     - conda install -n root -c conda-forge -y -q mamba conda-pack
   script:
     # Create conda environment
-    - export LOCAL_CONDA_ENV="file://${CI_PROJECT_DIR}/conda-bld"
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
     - cat .gitlab/conda-env/environment-subst.yml
     - conda env create -q -n ${CONDA_ENVIRONMENT} -f .gitlab/conda-env/environment-subst.yml
     - conda activate ${CONDA_ENVIRONMENT}
 
     # Install pypi packages
+    - conda install -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
     - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
 
     # Tests
