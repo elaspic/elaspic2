@@ -24,7 +24,7 @@ yaml.add_constructor("!DomainMutation", make_kwargs_constructor(DomainMutation))
 yaml.add_constructor("!DomainTarget", make_kwargs_constructor(DomainTarget))
 
 with Path(__file__).with_suffix(".yaml").open("rt") as fin:
-    TEST_DATA = yaml.load(fin)
+    TEST_DATA = yaml.load(fin, Loader=yaml.FullLoader)
 
 
 # --- Tests ---
