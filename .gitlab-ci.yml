@@ -54,7 +54,7 @@ create-conda-env:
   before_script:
     # Install global dependencies
     - apt-get update -y -qq -o=Dpkg::Use-Pty=0
-    - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync
+    - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync gettext-base
     # Install ssh client
     - "which ssh-agent || ( apt-get install -y -qq -o=Dpkg::Use-Pty=0 openssh-client -y )"
     # - apk add openssh
