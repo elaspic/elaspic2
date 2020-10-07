@@ -43,7 +43,7 @@ def to_rosetta_coords(structure: Structure, mutation: Mutation) -> Mutation:
 
 def write_mutation_file(mut: Mutation, temp_dir: Path) -> Path:
     """Write a mutation file recognized by Rosetta inside `temp_dir`."""
-    mutation_file = temp_dir.joinpath("{}{}{}.txt".format(*mut[2:5]))
+    mutation_file = temp_dir.joinpath(f"{mut.residue_wt}{mut.residue_id}{mut.residue_mut}.txt")
     with open(mutation_file, "w") as ofh:
         ofh.write("total 1\n" "1\n" f"{mut.residue_wt} {mut.residue_id} {mut.residue_mut}\n")
     return mutation_file
@@ -72,7 +72,7 @@ def parse_ddg_monomer_file(ddg_file: Path) -> dict:
 
 
 def get_cartesian_ddg_file(mut: Mutation, temp_dir: Path) -> Path:
-    return temp_dir.joinpath("{}{}{}.ddg".format(*mut[1:4]))
+    return temp_dir.joinpath(f"{mut.residue_wt}{mut.residue_id}{mut.residue_mut}.ddg")
 
 
 def parse_cartesian_ddg_file(ddg_file: Path) -> dict:
