@@ -15,12 +15,13 @@ requirements:
     - python
   run:
     - python
-    - kmbio
+    - biopython =1.78
+    - kmbio =2.1.0
     - kmtools =0.2.8
 
 test:
   imports:
-    - elaspic_v2
+    - ev2
 
 about:
   home: https://gitlab.com/ostrokach/elaspic-v2
