@@ -1,0 +1,24 @@
+name: elaspic-v2
+channels:
+  - https://${PYROSETTA_CONDA_LOGIN}@conda.graylab.jhu.edu
+  - conda-forge
+  - defaults
+dependencies:
+  # Basic python
+  - python =3.8
+  - conda
+  - pip
+  # Biology
+  - biopython =1.78
+  - kimlab::kmbio =2.1.0
+  - kimlab::kmtools =0.2.8
+  - mdtraj =1.9.4
+  - pyrosetta =2020.40+release.f01fa77
+  - salilab::modeller =9.25
+  # Machine learning
+  - anaconda::cudatoolkit =10.1.*
+  - pytorch::pytorch =1.6.0
+  # Binary files
+  - bioconda::mmseqs2
+  - bioconda::muscle
+  - rosetta::rosetta-ddg =3.12

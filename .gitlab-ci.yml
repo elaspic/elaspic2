@@ -46,6 +46,65 @@ variables:
         - omnia
       EOF
 
+# === Playground ===
+
+create-conda-env:
+  stage: lint
+  image: ubuntu:20.04
+  before_script:
+    # Install global dependencies
+    - apt-get update -y -qq -o=Dpkg::Use-Pty=0
+    - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync
+    # Install ssh client
+    - "which ssh-agent || ( apt-get install -y -qq -o=Dpkg::Use-Pty=0 openssh-client -y )"
+    # - apk add openssh
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    # Test that ssh client works
+    - ssh strokach@conda-envs.proteinsolver.org "echo hello"
+    # Install conda
+    - curl -s -L https://repo.anaconda.com/miniconda/Miniconda3-py38_4.8.3-Linux-x86_64.sh > miniconda.sh
+    - md5sum miniconda.sh | grep d63adf39f2c220950a063e0529d4ff74
+    - sh miniconda.sh -b -p /opt/conda
+    - source /opt/conda/etc/profile.d/conda.sh
+    # - conda init
+    - conda activate root
+    - conda config --set channel_priority true # TODO: strict
+    - conda config --set pip_interop_enabled false
+    - conda install -n root -c conda-forge -y -q mamba conda-pack
+  script:
+    # Create conda environment
+    - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment.yml
+    - conda env create -q -n ${ENVIRONMENT_NAME} -f .gitlab/conda-env/environment.yml
+    - conda activate ${ENVIRONMENT_NAME}
+
+    # Install pypi packages
+    - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
+
+    # Tests
+    - python -c "import torch_sparse"
+    - conda deactivate
+    - conda list -n ${ENVIRONMENT_NAME}
+
+    # Pack the environment
+    - export ENVIRONMENT_FILE=${ENVIRONMENT_NAME}-${CI_COMMIT_REF_NAME}.tar.gz
+    - conda pack -q -n ${ENVIRONMENT_NAME} -o ${ENVIRONMENT_FILE}
+    - ls -lSh ${ENVIRONMENT_FILE}
+
+    # Upload the environment to shared folder
+    # - rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${ENVIRONMENT_NAME}/
+  variables:
+    ENVIRONMENT_NAME: "elaspic-v2"
+  except:
+    variables:
+      - $UPDATE_IMAGES
+  artifacts:
+    paths:
+      - ${ENVIRONMENT_FILE}
+
 # === Lint ===
 
 lint:
@@ -169,7 +228,7 @@ docs:
     - anaconda -t $ANACONDA_TOKEN upload $CI_PROJECT_DIR/conda-bld/*/*.tar.bz2 -u ostrokach-forge --no-progress --force
   only:
     - tags
-  allow_failure: true  # TODO: Change when no longer testing.
+  allow_failure: true # TODO: Change when no longer testing.
 
 deploy-py37:
   extends:
@@ -193,7 +252,7 @@ deploy-pypi:
     - twine upload dist/*
   only:
     - tags
-  allow_failure: true  # TODO: Change when no longer testing.
+  allow_failure: true # TODO: Change when no longer testing.
 
 trigger-custom-pipelines:
   stage: deploy

@@ -1,0 +1,6 @@
+torch-scatter==latest+cu101
+torch-sparse==latest+cu101
+torch-cluster==latest+cu101
+torch-spline-conv==latest+cu101
+torch-geometric
+-f https://pytorch-geometric.com/whl/torch-1.6.0.html
