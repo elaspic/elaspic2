@@ -78,8 +78,8 @@ create-conda-env:
   script:
     # Create conda environment
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment.yml
-    - conda env create -q -n ${ENVIRONMENT_NAME} -f .gitlab/conda-env/environment.yml
-    - conda activate ${ENVIRONMENT_NAME}
+    - conda env create -q -n ${CI_PROJECT_NAME} -f .gitlab/conda-env/environment.yml
+    - conda activate ${CI_PROJECT_NAME}
 
     # Install pypi packages
     - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
@@ -87,23 +87,18 @@ create-conda-env:
     # Tests
     - python -c "import torch_sparse"
     - conda deactivate
-    - conda list -n ${ENVIRONMENT_NAME}
+    - conda list -n ${CI_PROJECT_NAME}
 
     # Pack the environment
-    - export ENVIRONMENT_FILE=${ENVIRONMENT_NAME}-${CI_COMMIT_REF_NAME}.tar.gz
-    - conda pack -q -n ${ENVIRONMENT_NAME} -o ${ENVIRONMENT_FILE}
+    - export ENVIRONMENT_FILE=${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}.tar.gz
+    - conda pack -q -n ${CI_PROJECT_NAME} -o ${ENVIRONMENT_FILE}
     - ls -lSh ${ENVIRONMENT_FILE}
 
     # Upload the environment to shared folder
-    # - rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${ENVIRONMENT_NAME}/
-  variables:
-    ENVIRONMENT_NAME: "elaspic-v2"
+    - rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CI_PROJECT_NAME}/
   except:
     variables:
       - $UPDATE_IMAGES
-  artifacts:
-    paths:
-      - ${ENVIRONMENT_FILE}
 
 # === Lint ===
 
