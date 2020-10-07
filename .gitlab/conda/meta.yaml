@@ -17,7 +17,7 @@ requirements:
     - python
     - biopython =1.78
     - kmbio =2.1.0
-    - kmtools =0.2.8
+    - kmtools =0.2.7
 
 test:
   imports:
