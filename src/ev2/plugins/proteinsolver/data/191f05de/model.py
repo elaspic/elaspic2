@@ -1,7 +1,6 @@
 import atexit
 import copy
 import csv
-import tempfile
 import time
 import warnings
 
@@ -11,13 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.modules.container import ModuleList
 from torch_geometric.nn.inits import reset
-from torch_geometric.utils import (
-    add_self_loops,
-    remove_self_loops,
-    scatter_,
-    to_dense_adj,
-    to_dense_batch,
-)
+from torch_geometric.utils import scatter_, to_dense_adj
 
 
 class EdgeConvMod(torch.nn.Module):
@@ -186,7 +179,7 @@ class Net(nn.Module):
     def forward(self, x, edge_index, edge_attr):
 
         x = self.embed_x(x)
-        #         edge_index, _ = add_self_loops(edge_index)  # We should remove self loops in this case!
+        # edge_index, _ = add_self_loops(edge_index)  # We should remove self loops in this case!
         edge_attr = self.embed_adj(edge_attr) if edge_attr is not None else None
 
         x_out, edge_attr_out = self.graph_conv_0(x, edge_index, edge_attr)
