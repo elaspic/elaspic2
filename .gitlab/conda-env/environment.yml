@@ -17,8 +17,10 @@ dependencies:
   - kimlab::kmbio =2.1.0
   - kimlab::kmtools =0.2.8
   - mdtraj =1.9.4
-  - pyrosetta =2020.37+release.3ba1aaa
   - salilab::modeller =9.25
+  # Rosetta
+  - pyrosetta =2020.37+release.3ba1aaa
+  - rosetta-ddg =2020.37
   # Machine learning
   - anaconda::cudatoolkit =10.1.*
   - proteinsolver =0.1.23
