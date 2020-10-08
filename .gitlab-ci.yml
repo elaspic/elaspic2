@@ -15,6 +15,7 @@ variables:
   PACKAGE_VERSION: "0.1.0"
   PYTHON_VERSION: "3.8"
   CONDA_ENVIRONMENT: elaspic
+  GIT_LFS_SKIP_SMUDGE: 1
 
 # === Configurations ===
 
@@ -135,8 +136,8 @@ test:
 
     # Clean up
     - conda deactivate
-  after_script:
-    # Skip unless building a release
+
+    # Skip the rest unless building a release
     - |
       if [ "$CI_BUILD_REF_NAME" != "master" ]; then
         echo "Skipping deploy for non-master branch $CI_BUILD_REF_NAME"
