@@ -185,7 +185,11 @@ def get_system_command(data: RosettaDDGData, mutation_file: Path) -> str:
             "-ddg::out ddg_predictions.out",  # this parameter does not work for cartesian_ddg
         ]
     elif data.protocol == "cartesian_ddg":
-        sc += ["cartesian_ddg.static.linuxgccrelease", "-ddg::cartesian", "-ddg::bbnbrs 1"]
+        sc += [
+            "cartesian_ddg.static.linuxgccrelease",
+            "-ddg::cartesian",
+            "-ddg::bbnbrs 1",
+        ]
     else:
         raise Exception
 
