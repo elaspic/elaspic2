@@ -164,9 +164,7 @@ def read_mutation_ddg(protocol: str, temp_dir: Path, mut: Mutation) -> dict:
 # =============================================================================
 
 
-def get_system_command(
-    data: RosettaDDGData, mutation_file: Path, rosetta_db=os.getenv("ROSETTA_DB")
-) -> str:
+def get_system_command(data: RosettaDDGData, mutation_file: Path) -> str:
     """Generate a Rosetta ΔΔG system command.
 
     Full description of every argument can be found at:
@@ -174,6 +172,10 @@ def get_system_command(
 
 
     """
+    import pyrosetta.database
+
+    rosetta_db = Path(pyrosetta.database.__path__[0]).resolve().as_posix()
+
     sc: List[str] = []
 
     if data.protocol == "ddg_monomer":
@@ -184,7 +186,7 @@ def get_system_command(
             "-ddg::out ddg_predictions.out",  # this parameter does not work for cartesian_ddg
         ]
     elif data.protocol == "cartesian_ddg":
-        sc += ["cartesian_ddg.static.linuxgccrelease", "-ddg::cartesian", "-bbnbr 1"]
+        sc += ["cartesian_ddg.static.linuxgccrelease", "-ddg::cartesian", "-ddg::bbnbrs 1"]
     else:
         raise Exception
 
