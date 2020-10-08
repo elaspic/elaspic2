@@ -29,7 +29,8 @@ dependencies:
   # Binary files
   - bioconda::mmseqs2 =12.113e3
   - bioconda::muscle =3.8.1551
-  - rosetta-ddg =3.12
+  # For cluster computing
+  - papermill =2.2.0
   # For testing
   - pytest
   - pytest-cov
