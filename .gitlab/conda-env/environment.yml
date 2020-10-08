@@ -23,7 +23,7 @@ dependencies:
   - rosetta-ddg =2020.37
   # Machine learning
   - anaconda::cudatoolkit =10.1.*
-  - proteinsolver =0.1.23
+  - proteinsolver =0.1.24
   - pytorch::pytorch =1.6.0
   - transformers =3.3.1
   # Binary files
