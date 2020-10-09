@@ -28,14 +28,15 @@ def relax_structure(self):
 def to_rosetta_coords(structure: Structure, mutation: Mutation) -> Mutation:
     """Convert mutation to Rosetta coordinates."""
     # Rosetta just joins residues (does not reset residue_idx at chain break)
-    pdb_residues = structure_tools.RESIDUE_MAPPING_TO_CANONICAL
     residue_idx_offset = 0
     for chain in structure.chains:
         if chain.id == mutation.chain_id:
             break
-        for residue in chain:
-            if residue.resname in pdb_residues:
-                residue_idx_offset += 1
+        residue_idx_offset += len(
+            structure_tools.get_chain_sequence(
+                chain, if_unknown="replace", unknown_residue_marker=""
+            )
+        )
     mutation = mutation._replace(residue_id=mutation.residue_id + residue_idx_offset)
     return mutation
 

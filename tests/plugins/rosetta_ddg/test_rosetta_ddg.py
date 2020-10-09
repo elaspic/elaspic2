@@ -42,14 +42,14 @@ def test_correct_residue(structure: Path, mutation: str, is_correct: bool):
             if key in kwargs:
                 kwargs.pop(key)
         proc = subprocess.Popen(
-            *args, **kwargs, bufsize=1, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            *args, **kwargs, bufsize=1, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
         )
-        for line in proc.stderr:
-            if "================== Using default script ==================" in line:
-                raise ResidueMatchError
+        for line in proc.stdout:
             if "ERROR: Assertion `pose.residue(resnum).name1() == wt` failed" in line:
                 raise ResidueMismatchError
-        raise Exception(f"Expected line was not reached: {list(proc.stderr)}.")
+            if "core.pack.task: Packer task: initialize from command line()" in line:
+                raise ResidueMatchError
+        raise Exception("Unexpected result.")
 
     with unittest.mock.patch("ev2.plugins.rosetta_ddg.rosetta_ddg.subprocess.run", subprocess_run):
         with pytest.raises(ResidueMatchError if is_correct else ResidueMismatchError):
