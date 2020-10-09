@@ -47,6 +47,8 @@ def test_correct_residue(structure: Path, mutation: str, is_correct: bool):
                 raise ResidueMatchError
             if "ERROR: Assertion `pose.residue(resnum).name1() == wt` failed" in line:
                 raise ResidueMismatchError
+        print(proc.stdout)
+        raise Exception(f"Expected line was not reached: {proc.stdout}.")
 
     with unittest.mock.patch("ev2.plugins.rosetta_ddg.rosetta_ddg.subprocess.run", subprocess_run):
         with pytest.raises(ResidueMatchError if is_correct else ResidueMismatchError):
