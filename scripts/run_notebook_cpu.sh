@@ -14,7 +14,7 @@
 unset XDG_RUNTIME_DIR
 
 mkdir ${SLURM_TMPDIR}/env
-tar -xzf ~/datapkg_input_dir/conda-envs/elaspic/elaspic-master.tar.gz -C ${SLURM_TMPDIR}/env
+tar -xzf ~/datapkg-data-dir/conda-envs/default/default-v42.tar.gz -C ${SLURM_TMPDIR}/env
 
 chmod ugo+rwX ${SLURM_TMPDIR}/env/bin/activate -R
 # source ${SLURM_TMPDIR}/env/bin/activate
