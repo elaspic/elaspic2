@@ -58,6 +58,8 @@ class ProtBert(SequenceTool, MutationAnalyzer):
             sequences += [" ".join(combined_aa_list), " ".join(combined_aa_mut_list)]
         features = cls._get_embeddings(sequences, mutation)
 
+        return features
+
     @classmethod
     def _get_embeddings(cls, sequences: List[str], mutation: str) -> List[np.ndarray]:
         ids = cls.tokenizer.batch_encode_plus(sequences, add_special_tokens=True, padding="longest")
