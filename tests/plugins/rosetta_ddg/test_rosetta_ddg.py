@@ -47,7 +47,7 @@ def test_correct_residue(structure: Path, mutation: str, is_correct: bool):
         for line in proc.stdout:
             if "ERROR: Assertion `pose.residue(resnum).name1() == wt` failed" in line:
                 raise ResidueMismatchError
-            if "core.pack.task: Packer task: initialize from command line()" in line:
+            if "protocols.relax.FastRelax" in line:
                 raise ResidueMatchError
         raise Exception("Unexpected result.")
 
