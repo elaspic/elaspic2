@@ -17,10 +17,14 @@ mkdir ${SLURM_TMPDIR}/env
 tar -xzf ~/datapkg_input_dir/conda-envs/elaspic/elaspic-master.tar.gz -C ${SLURM_TMPDIR}/env
 
 chmod ugo+rwX ${SLURM_TMPDIR}/env/bin/activate -R
-source ${SLURM_TMPDIR}/env/bin/activate
+# source ${SLURM_TMPDIR}/env/bin/activate
+source ${SLURM_TMPDIR}/env/etc/profile.d/conda.sh
 conda-unpack
 
 sed -i "s|XXXX|${KEY_MODELLER}|" ${SLURM_TMPDIR}/env/lib/modeller-9.25/modlib/modeller/config.py
+
+pip install ..
+
 # jupyter lab --ip 0.0.0.0 --no-browser
 
 NOTEBOOK_STEM=$(basename ${NOTEBOOK_PATH%%.ipynb})
