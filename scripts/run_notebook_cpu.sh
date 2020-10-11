@@ -9,7 +9,7 @@
 #SBATCH --export=ALL
 #SBATCH --mail-type=BEGIN
 #SBATCH --mail-user=alexey.strokach@kimlab.org
-#SBATCH --output=/scratch/strokach/tmp/log/run-notebook-cpu-%N-%j.log
+#SBATCH --output=logs/run-notebook-cpu-%N-%j.log
 
 set -ev
 
