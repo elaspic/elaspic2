@@ -1,6 +1,8 @@
 from typing import NamedTuple
+import torch
 
 
 class ProteinSolverData(NamedTuple):
-    protein_sequence: str
-    ligand_sequence: str
+    x: torch.Tensor
+    edge_index: torch.Tensor
+    edge_attr: torch.Tensor

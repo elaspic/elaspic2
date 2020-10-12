@@ -1,2 +1,2 @@
 from .types import ProteinSolverData
-from .proteinsolver import ProteinSolver
+from .proteinsolver import ProteinSolver, ProteinSolverAnalyzeError, ProteinSolverBuildError
