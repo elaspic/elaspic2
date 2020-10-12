@@ -27,7 +27,10 @@ sed -i "s|XXXX|${KEY_MODELLER}|" ${SLURM_TMPDIR}/env/lib/modeller-9.25/modlib/mo
 
 pip install --no-deps --no-use-pep517 ..
 
-# jupyter lab --ip 0.0.0.0 --no-browser
+if [[ ${INTERACTIVE} = "true" ]] ; then
+    jupyter lab --ip 0.0.0.0 --no-browser
+    exit 0
+fi
 
 NOTEBOOK_STEM=$(basename ${NOTEBOOK_PATH%%.ipynb})
 NOTEBOOK_DIR=$(dirname ${NOTEBOOK_PATH})
