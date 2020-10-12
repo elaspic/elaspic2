@@ -25,7 +25,7 @@ conda-unpack
 
 sed -i "s|XXXX|${KEY_MODELLER}|" ${SLURM_TMPDIR}/env/lib/modeller-9.25/modlib/modeller/config.py
 
-pip install ..
+pip install --no-deps --no-use-pep517 ..
 
 # jupyter lab --ip 0.0.0.0 --no-browser
 
