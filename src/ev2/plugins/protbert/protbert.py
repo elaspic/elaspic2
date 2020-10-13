@@ -53,7 +53,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
 
         from transformers import pipeline
 
-        unmasker = pipeline("fill-mask", model=cls.model_lm, tokenizer=cls.tokenizer, topk=20)
+        unmasker = pipeline("fill-mask", model=cls.model_lm, tokenizer=cls.tokenizer, topk=30)
         aa_list = list(data.sequence)
         assert aa_list[int(mut.residue_id) - 1] == mut.residue_wt
         aa_list[int(mut.residue_id) - 1] = "[MASK]"
