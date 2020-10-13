@@ -25,7 +25,7 @@ conda-unpack
 
 sed -i "s|XXXX|${KEY_MODELLER}|" ${SLURM_TMPDIR}/env/lib/modeller-9.25/modlib/modeller/config.py
 
-pip install --no-deps --no-use-pep517 ..
+pip install --no-deps --no-use-pep517 -e ..
 
 if [[ ${INTERACTIVE} = "true" ]] ; then
     jupyter lab --ip 0.0.0.0 --no-browser
@@ -34,7 +34,7 @@ fi
 
 NOTEBOOK_STEM=$(basename ${NOTEBOOK_PATH%%.ipynb})
 NOTEBOOK_DIR=$(dirname ${NOTEBOOK_PATH})
-OUTPUT_TAG="${SLURM_JOB_NODELIST}-${SLURM_JOB_ID}-${SLURM_ARRAY_JOB_ID}-${SLURM_ARRAY_TASK_ID}"
+OUTPUT_TAG="${SLURM_ARRAY_JOB_ID}-${SLURM_ARRAY_TASK_ID}-${SLURM_JOB_NODELIST}-${SLURM_JOB_ID}"
 
 mkdir -p "${NOTEBOOK_DIR}/${NOTEBOOK_STEM}"
 papermill --no-progress-bar --log-output --kernel python3 "${NOTEBOOK_PATH}" "${NOTEBOOK_DIR}/${NOTEBOOK_STEM}-${OUTPUT_TAG}.ipynb"
