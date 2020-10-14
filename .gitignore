@@ -75,6 +75,7 @@ target/
 
 # Jupyter
 .ipynb_checkpoints
+notebooks/logs
 notebooks/*-gra*.ipynb
 notebooks/*-cdr*.ipynb
 
