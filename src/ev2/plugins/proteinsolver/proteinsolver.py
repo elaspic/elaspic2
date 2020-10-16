@@ -42,12 +42,20 @@ class ProteinSolver(StructureTool, MutationAnalyzer):
 
     @classmethod
     def build(  # type: ignore[override]
-        cls, structure_file: Union[Path, str], protein_sequence: str, ligand_sequence: str
+        cls,
+        structure_file: Union[Path, str],
+        protein_sequence: str,
+        ligand_sequence: str,
+        remove_hetatms=True,
     ) -> ProteinSolverData:
         import proteinsolver
 
         structure = PDB.load(structure_file)
-        pdata = extract_seq_and_adj(structure, ["A"] if ligand_sequence is None else ["A", "B"])
+        pdata = extract_seq_and_adj(
+            structure,
+            ["A"] if ligand_sequence is None else ["A", "B"],
+            remove_hetatms=remove_hetatms,
+        )
 
         expected_sequence = protein_sequence + (ligand_sequence or "")
         if pdata.sequence != expected_sequence:

@@ -13,7 +13,7 @@ def extract_seq_and_adj(structure, chain_ids, remove_hetatms=False):
         structure, 0, chain_ids, r_cutoff=12, remove_hetatms=remove_hetatms
     )
     domain_sequence = structure_tools.get_chain_sequence(
-        domain, if_unknown="replace", unknown_residue_marker=""
+        domain, if_unknown="replace", unknown_residue_marker=("" if remove_hetatms else "X")
     )
     assert max(result_df["residue_idx_1"].values) < len(domain_sequence)
     assert max(result_df["residue_idx_2"].values) < len(domain_sequence)
