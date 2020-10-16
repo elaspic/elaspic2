@@ -58,6 +58,8 @@ class ProteinSolver(StructureTool, MutationAnalyzer):
         )
 
         expected_sequence = protein_sequence + (ligand_sequence or "")
+        if remove_hetatms:
+            expected_sequence = expected_sequence.replace("X", "")
         if pdata.sequence != expected_sequence:
             raise ProteinSolverBuildError(
                 f"Parsed sequence does not match provided sequence "
