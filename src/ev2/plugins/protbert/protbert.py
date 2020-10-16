@@ -26,9 +26,13 @@ class ProtBert(SequenceTool, MutationAnalyzer):
         cls.device = device
 
     @classmethod
-    def build(cls, sequence: str, ligand_sequence: str) -> ProtBertData:  # type: ignore[override]
+    def build(  # type: ignore[override]
+        cls, sequence: str, ligand_sequence: str, remove_hetatms=True
+    ) -> ProtBertData:
         if ligand_sequence is not None:
             sequence += ligand_sequence
+        if remove_hetatms:
+            sequence = sequence.replace("X", "")
         return ProtBertData(sequence=sequence)
 
     @classmethod
