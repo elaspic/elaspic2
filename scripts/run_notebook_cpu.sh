@@ -18,7 +18,7 @@ unset XDG_RUNTIME_DIR
 echo ${NOTEBOOK_PATH}
 
 mkdir ${SLURM_TMPDIR}/env
-tar -xzf ~/datapkg-data-dir/conda-envs/default/default-v42.tar.gz -C ${SLURM_TMPDIR}/env
+tar -xzf ~/datapkg-data-dir/conda-envs/default/default-v43.tar.gz -C ${SLURM_TMPDIR}/env
 
 source ${SLURM_TMPDIR}/env/etc/profile.d/conda.sh
 source ${SLURM_TMPDIR}/env/bin/activate
