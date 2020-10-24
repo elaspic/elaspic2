@@ -79,4 +79,4 @@ node_modules/
 notebooks/logs
 notebooks/*-gra*.ipynb
 notebooks/*-cdr*.ipynb
-
+notebooks/*/*
