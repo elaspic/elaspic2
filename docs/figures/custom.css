@@ -1,0 +1,41 @@
+.grid-container {
+  display: inline-grid;
+  grid-template-columns: repeat(12, 1fr);
+  /* background-color: aliceblue; */
+  padding: 0px;
+  grid-column-gap: 0px;
+  grid-row-gap: 4px;
+  max-width: 1200px;
+  grid-auto-columns: 1fr;
+}
+
+.grid-item {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  /* border: 1px solid rgba(0, 0, 0, 0.8); */
+  padding: 0px;
+  max-width: inherit;
+}
+
+/* Container holding the image and the text */
+.container {
+  position: relative;
+  font-family: "Arial", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.container > .img-tag {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.container > .img-src {
+  padding: 8px;
+  text-align: center;
+}
+
+.img-src > img {
+  width: 100%;
+}

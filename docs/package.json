@@ -1,0 +1,17 @@
+{
+  "bin": {
+    "hello": "./hello.js"
+  },
+  "scripts": {
+    "build": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 scss -o public/css/",
+    "serve": "http-server -a localhost -p 8000",
+    "serve-public": "http-server -a 0.0.0.0 -p 8000",
+    "export-pdf": "node scripts/export_pdf.js"
+  },
+  "dependencies": {
+    "bootstrap": "^4.4.0",
+    "http-server": "^0.12.1",
+    "node-sass": "^4.13.1",
+    "puppeteer": "^2.1.0"
+  }
+}
