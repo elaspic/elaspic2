@@ -70,6 +70,7 @@ target/
 .python-version
 
 # AS
+node_modules/
 .vscode/
 *-bak.py
 
