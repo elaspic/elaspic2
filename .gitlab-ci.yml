@@ -68,9 +68,10 @@ build:
   script:
     - conda install -yq conda conda-build conda-verify conda-forge-pinning
     - cd "${CI_PROJECT_DIR}/.gitlab/conda"
-    - conda build .
+    - >
+      conda build .
       --variant-config-files /opt/conda/conda_build_config.yaml
-      --python $PYTHON_VERSION
+      --variants "{python: [$PYTHON_VERSION], numpy: [1.16], python_impl: [cpython]}"
       --output-folder "$CI_PROJECT_DIR/conda-bld"
   artifacts:
     paths:
