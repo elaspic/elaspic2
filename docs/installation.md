@@ -2,13 +2,13 @@
 
 ## Stable release
 
-To install `elaspic-v2`, run this command in your terminal:
+To install `elaspic2`, run this command in your terminal:
 
 ```bash
-conda install elaspic-v2 -c ostrokach-forge
+conda install elaspic2 -c ostrokach-forge
 ```
 
-This is the preferred method to install `elaspic-v2`, as it will always install the most recent stable release.
+This is the preferred method to install `elaspic2`, as it will always install the most recent stable release.
 
 If you don't have [conda] installed, this [Python installation guide] can guide
 you through the process.
@@ -18,12 +18,12 @@ you through the process.
 
 ## From sources
 
-The sources for `elaspic-v2` can be downloaded from the [GitLab repo].
+The sources for `elaspic2` can be downloaded from the [GitLab repo].
 
 You can either clone the public repository:
 
 ```bash
-git clone git://gitlab.com/ostrokach/elaspic-v2
+git clone git://gitlab.com/ostrokach/elaspic2
 ```
 
 Or download the [tarball]:

@@ -6,7 +6,7 @@ import pytest
 from kmtools import structure_tools
 from kmtools.structure_tools import DomainTarget
 
-from ev2.plugins.modeller import run_modeller
+from elaspic2.plugins.modeller import run_modeller
 
 TESTS_DIR = Path(__file__).absolute().parent
 

@@ -15,7 +15,7 @@ from kmtools.structure_tools import (
     DomainTarget,
 )
 
-import ev2
+import elaspic2
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,9 @@ class ToolBase:
     @classmethod
     def get_temp_dir(cls, *unique_ids) -> Path:
         temp_dir = (
-            Path(tempfile.mkdtemp()).joinpath(ev2.__name__, cls.__name__, *unique_ids).resolve()
+            Path(tempfile.mkdtemp())
+            .joinpath(elaspic2.__name__, cls.__name__, *unique_ids)
+            .resolve()
         )
         temp_dir.mkdir(parents=True, exist_ok=True)
         return temp_dir

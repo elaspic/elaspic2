@@ -7,9 +7,9 @@ import torch.nn as nn
 from kmbio import PDB
 from kmtools.structure_tools.types import DomainMutation as Mutation
 
-from ev2.core import MutationAnalyzer, StructureTool
-from ev2.plugins.proteinsolver.protein_data import extract_seq_and_adj, get_mutation_score
-from ev2.plugins.proteinsolver.types import ProteinSolverData
+from elaspic2.core import MutationAnalyzer, StructureTool
+from elaspic2.plugins.proteinsolver.protein_data import extract_seq_and_adj, get_mutation_score
+from elaspic2.plugins.proteinsolver.types import ProteinSolverData
 
 
 class ProteinSolver(StructureTool, MutationAnalyzer):
@@ -28,7 +28,7 @@ class ProteinSolver(StructureTool, MutationAnalyzer):
             .resolve(strict=True)
             .as_posix()
         )
-        module = importlib.import_module(f"ev2.plugins.proteinsolver.data.{model_name}.model")
+        module = importlib.import_module(f"elaspic2.plugins.proteinsolver.data.{model_name}.model")
         model = module.Net(  # type: ignore
             x_input_size=21, adj_input_size=2, hidden_size=128, output_size=20
         )

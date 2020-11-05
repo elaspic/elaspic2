@@ -7,7 +7,7 @@ def read_md(file):
 
 
 setup(
-    name="elaspic-v2",
+    name="elaspic2",
     version="0.1.0",
     description=(
         "Predicting the effect of mutations on protein folding and protein-protein interaction."
@@ -21,7 +21,7 @@ setup(
     package_data={},
     include_package_data=True,
     zip_safe=False,
-    keywords="elaspic_v2",
+    keywords="elaspic2",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",

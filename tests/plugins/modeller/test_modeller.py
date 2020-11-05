@@ -4,7 +4,7 @@ import pytest
 import yaml
 from kmtools.structure_tools import DomainMutation, DomainTarget
 
-from ev2.plugins.modeller import Modeller
+from elaspic2.plugins.modeller import Modeller
 
 TESTS_DIR = Path(__file__).absolute().parent
 

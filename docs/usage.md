@@ -1,7 +1,7 @@
 # Usage
 
-To use `elaspic-v2` in a project:
+To use `elaspic2` in a project:
 
 ```python
-import ev2
+import elaspic2
 ```

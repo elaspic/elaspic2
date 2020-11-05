@@ -8,9 +8,9 @@ from kmbio.PDB import Structure
 from kmtools import structure_tools
 from kmtools.structure_tools import DomainMutation, DomainTarget
 
-from ev2.core import HomologyModeler, Mutator, StructureTool
-from ev2.plugins.modeller.functions import run_modeller
-from ev2.plugins.modeller.types import ModellerData
+from elaspic2.core import HomologyModeler, Mutator, StructureTool
+from elaspic2.plugins.modeller.functions import run_modeller
+from elaspic2.plugins.modeller.types import ModellerData
 
 
 class ModellerError(Exception):

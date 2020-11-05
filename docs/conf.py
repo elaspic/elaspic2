@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# elaspic-v2 documentation build configuration file, created by
+# elaspic2 documentation build configuration file, created by
 # sphinx-quickstart on Tue Jul  9 22:26:36 2013.
 #
 # This file is execfile()d with the current directory set to its
@@ -34,7 +34,7 @@ project_root = os.path.dirname(cwd)
 # version is used.
 # sys.path.insert(0, project_root)
 
-import ev2
+import elaspic2
 
 # -- General configuration ---------------------------------------------
 
@@ -92,7 +92,7 @@ source_parsers = {".md": CommonMarkParser}
 master_doc = "index"
 
 # General information about the project.
-project = "elaspic-v2"
+project = "elaspic2"
 copyright = "2020, Alexey Strokach"
 
 # The version info for the project you're documenting, acts as replacement
@@ -251,8 +251,8 @@ latex_elements = {
 latex_documents = [
     (
         "index",
-        "elaspic-v2.tex",
-        "elaspic-v2 Documentation",
+        "elaspic2.tex",
+        "elaspic2 Documentation",
         "Alexey Strokach",
         "manual",
     )
@@ -286,8 +286,8 @@ latex_documents = [
 man_pages = [
     (
         "index",
-        "elaspic-v2",
-        "elaspic-v2 Documentation",
+        "elaspic2",
+        "elaspic2 Documentation",
         ["Alexey Strokach"],
         1,
     )
@@ -305,10 +305,10 @@ man_pages = [
 texinfo_documents = [
     (
         "index",
-        "elaspic-v2",
-        "elaspic-v2 Documentation",
+        "elaspic2",
+        "elaspic2 Documentation",
         "Alexey Strokach",
-        "elaspic-v2",
+        "elaspic2",
         "One line description of project.",
         "Miscellaneous",
     )

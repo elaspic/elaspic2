@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from ev2.plugins.rosetta_ddg import RosettaDDG
+from elaspic2.plugins.rosetta_ddg import RosettaDDG
 
 TESTS_DIR = Path(__file__).absolute().parent
 
@@ -51,7 +51,7 @@ def test_correct_residue(structure: Path, mutation: str, is_correct: bool):
                 raise ResidueMatchError
         raise Exception("Unexpected result.")
 
-    with unittest.mock.patch("ev2.plugins.rosetta_ddg.rosetta_ddg.subprocess.run", subprocess_run):
+    with unittest.mock.patch("elaspic2.plugins.rosetta_ddg.rosetta_ddg.subprocess.run", subprocess_run):
         with pytest.raises(ResidueMatchError if is_correct else ResidueMismatchError):
             RosettaDDG.analyze_mutation(mutation, data)
 

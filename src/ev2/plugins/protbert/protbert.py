@@ -3,8 +3,8 @@ from pathlib import Path
 import torch
 from kmtools.structure_tools.types import DomainMutation as Mutation
 
-from ev2.core import MutationAnalyzer, SequenceTool
-from ev2.plugins.protbert.types import ProtBertData
+from elaspic2.core import MutationAnalyzer, SequenceTool
+from elaspic2.plugins.protbert.types import ProtBertData
 
 
 class ProtBert(SequenceTool, MutationAnalyzer):

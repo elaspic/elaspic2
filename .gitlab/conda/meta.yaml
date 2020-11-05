@@ -1,5 +1,5 @@
 package:
-  name: elaspic-v2
+  name: elaspic2
   version: 0.1.0
 
 source:
@@ -21,7 +21,7 @@ requirements:
 
 test:
   imports:
-    - ev2
+    - elaspic2
 
 about:
   home: https://gitlab.com/ostrokach/elaspic-v2

@@ -8,8 +8,8 @@ from kmbio.PDB import Structure
 from kmtools import structure_tools, system_tools
 from kmtools.structure_tools.types import DomainMutation as Mutation
 
-from ev2.core.utils import features_to_differences
-from ev2.plugins.rosetta_ddg.types import RosettaDDGData
+from elaspic2.core.utils import features_to_differences
+from elaspic2.plugins.rosetta_ddg.types import RosettaDDGData
 
 logger = logging.getLogger(__name__)
 

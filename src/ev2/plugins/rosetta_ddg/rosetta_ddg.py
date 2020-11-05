@@ -11,14 +11,14 @@ from kmbio.PDB import Structure
 from kmtools import py_tools
 from kmtools.structure_tools.types import DomainMutation as Mutation
 
-from ev2.core.interface import MutationAnalyzer, StructureTool
-from ev2.plugins.rosetta_ddg.functions import (
+from elaspic2.core.interface import MutationAnalyzer, StructureTool
+from elaspic2.plugins.rosetta_ddg.functions import (
     get_system_command,
     read_mutation_ddg,
     to_rosetta_coords,
     write_mutation_file,
 )
-from ev2.plugins.rosetta_ddg.types import RosettaDDGData
+from elaspic2.plugins.rosetta_ddg.types import RosettaDDGData
 
 logger = logging.getLogger(__name__)
 

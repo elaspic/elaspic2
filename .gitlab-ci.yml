@@ -80,7 +80,7 @@ build:
 
 .run-tests:
   script: &run-tests
-    - PKG_INSTALL_DIR=$(python -c "import ev2; print(ev2.__path__[0])")
+    - PKG_INSTALL_DIR=$(python -c "import elaspic2; print(elaspic2.__path__[0])")
     - python -m pytest
       -c setup.cfg
       --cov="${PKG_INSTALL_DIR}"
