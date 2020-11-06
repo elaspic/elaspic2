@@ -12,6 +12,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
     model = None
     model_lm = None
     device = None
+    is_loaded: bool = False
 
     @classmethod
     def load_model(cls, model_name="prot_bert_bfd", device=torch.device("cpu")) -> None:
@@ -21,9 +22,9 @@ class ProtBert(SequenceTool, MutationAnalyzer):
         cls.tokenizer = BertTokenizer.from_pretrained(data_dir.as_posix(), do_lower_case=False)
         cls.model = BertModel.from_pretrained(data_dir.as_posix())
         cls.model = cls.model.eval().to(device)
-        cls.model_lm = BertForMaskedLM.from_pretrained(data_dir.as_posix())
         cls.model_lm = cls.model_lm.eval().to(device)
         cls.device = device
+        cls.is_loaded = True
 
     @classmethod
     def build(  # type: ignore[override]

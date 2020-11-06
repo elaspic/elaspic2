@@ -14,7 +14,8 @@ from elaspic2.plugins.proteinsolver.types import ProteinSolverData
 
 class ProteinSolver(StructureTool, MutationAnalyzer):
     model: Optional[nn.Module] = None
-    device = None
+    device: Optional[torch.device] = None
+    is_loaded: bool = False
 
     @classmethod
     def load_model(cls, model_name="191f05de", device=torch.device("cpu")) -> None:
@@ -39,6 +40,7 @@ class ProteinSolver(StructureTool, MutationAnalyzer):
 
         cls.model = model
         cls.device = device
+        cls.is_loaded = True
 
     @classmethod
     def build(  # type: ignore[override]
