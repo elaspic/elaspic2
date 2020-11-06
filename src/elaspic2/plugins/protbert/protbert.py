@@ -37,7 +37,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
             finally:
                 logging.set_verbosity_warning()
 
-        with importlib.resources.path(elaspic2.plugins.protbert.data, "prot_bert_bfd") as data_dir:
+        with importlib_resources.path(elaspic2.plugins.protbert.data, "prot_bert_bfd") as data_dir:
             cls._download_model_data(data_dir)
             cls.tokenizer = BertTokenizer.from_pretrained(data_dir.as_posix(), do_lower_case=False)
             cls.model = BertModel.from_pretrained(data_dir.as_posix())
