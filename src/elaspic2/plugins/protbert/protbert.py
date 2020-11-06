@@ -89,7 +89,23 @@ class ProtBert(SequenceTool, MutationAnalyzer):
 
         from transformers import pipeline
 
-        unmasker = pipeline("fill-mask", model=cls.model_lm, tokenizer=cls.tokenizer, topk=30)
+        def guess_transformer_device(device: torch.device) -> int:
+            if device.type == "cpu":
+                return -1
+            elif ":" in device.type:
+                return int(cls.device.type.split(":")[-1])
+            else:
+                assert device.type == "cuda"
+                return 0
+
+        unmasker = pipeline(
+            "fill-mask",
+            model=cls.model_lm,
+            tokenizer=cls.tokenizer,
+            topk=30,
+            device=guess_transformer_device(cls.device),
+        )
+
         aa_list = list(data.sequence)
         assert aa_list[int(mut.residue_id) - 1] == mut.residue_wt
         aa_list[int(mut.residue_id) - 1] = "[MASK]"
@@ -111,10 +127,14 @@ class ProtBert(SequenceTool, MutationAnalyzer):
         assert aa_wt_list[mut_idx] == mut.residue_wt
         assert aa_mut_list[mut_idx] == mut.residue_mut
 
-        encoded_input_wt = cls.tokenizer(" ".join(list(aa_wt_list)), return_tensors="pt")
+        encoded_input_wt = cls.tokenizer(" ".join(list(aa_wt_list)), return_tensors="pt").to(
+            cls.device
+        )
         output_wt, output_cls_wt = cls.model(**encoded_input_wt)
 
-        encoded_input_mut = cls.tokenizer(" ".join(list(aa_mut_list)), return_tensors="pt")
+        encoded_input_mut = cls.tokenizer(" ".join(list(aa_mut_list)), return_tensors="pt").to(
+            cls.device
+        )
         output_mut, output_cls_mut = cls.model(**encoded_input_mut)
 
         return {
