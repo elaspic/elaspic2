@@ -66,7 +66,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
             logger.info("Downloading ProtBert model files. This may take several minutes...")
             # Pretend to be a browser
             opener = urllib.request.build_opener()
-            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+            opener.addheaders = [("User-agent", "Mozilla/5.0")]
             urllib.request.install_opener(opener)
             # Download files
             urllib.request.urlretrieve(url, protbert_model_file)
