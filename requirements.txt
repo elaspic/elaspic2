@@ -1,4 +1,5 @@
 paramiko==2.7.2
+brotlipy==0.7.0
 biopython==1.78
 tenacity==6.2.0
 mmtf-python==1.1.2
