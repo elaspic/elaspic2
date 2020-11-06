@@ -1,5 +1,5 @@
 default:
-  image: condaforge/linux-anvil-comp7:latest
+  image: condaforge/linux-anvil-cos7-x86_64:latest
 
 stages:
   - custom
