@@ -6,6 +6,11 @@ def read_md(file):
         return fin.read()
 
 
+def read_requirements():
+    with open("requirements.txt") as fin:
+        return [l.strip() for l in fin if l.strip()]
+
+
 setup(
     name="elaspic2",
     version="0.1.0",
@@ -25,6 +30,7 @@ setup(
             "plugins/proteinsolver/191f05de/e53-s1952148-d93703104.state",
         ]
     },
+    install_requires=read_requirements(),
     include_package_data=True,
     zip_safe=False,
     keywords="elaspic2",

@@ -1,0 +1,5 @@
+paramiko==2.7.2
+biopython==1.78
+tenacity==6.2.0
+mmtf-python==1.1.2
+mdtraj==1.9.4
