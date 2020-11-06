@@ -1,10 +1,17 @@
+import importlib.resources
+import logging
+import urllib.request
+from contextlib import contextmanager
 from pathlib import Path
 
 import torch
 from kmtools.structure_tools.types import DomainMutation as Mutation
 
+import elaspic2.plugins.protbert.data
 from elaspic2.core import MutationAnalyzer, SequenceTool
 from elaspic2.plugins.protbert.types import ProtBertData
+
+logger = logging.getLogger(__name__)
 
 
 class ProtBert(SequenceTool, MutationAnalyzer):
@@ -16,15 +23,39 @@ class ProtBert(SequenceTool, MutationAnalyzer):
 
     @classmethod
     def load_model(cls, model_name="prot_bert_bfd", device=torch.device("cpu")) -> None:
-        from transformers import BertForMaskedLM, BertModel, BertTokenizer
+        from transformers import BertForMaskedLM, BertModel, BertTokenizer, logging
 
-        data_dir = Path(__file__).parent.joinpath("data", model_name).resolve(strict=True)
-        cls.tokenizer = BertTokenizer.from_pretrained(data_dir.as_posix(), do_lower_case=False)
-        cls.model = BertModel.from_pretrained(data_dir.as_posix())
+        @contextmanager
+        def hide_warning():
+            try:
+                logging.set_verbosity_error()
+                yield
+            finally:
+                logging.set_verbosity_warning()
+
+        with importlib.resources.path(elaspic2.plugins.protbert.data, "prot_bert_bfd") as data_dir:
+            cls._download_model_data(data_dir)
+            cls.tokenizer = BertTokenizer.from_pretrained(data_dir.as_posix(), do_lower_case=False)
+            cls.model = BertModel.from_pretrained(data_dir.as_posix())
+            with hide_warning():
+                cls.model_lm = BertForMaskedLM.from_pretrained(data_dir.as_posix())
+
         cls.model = cls.model.eval().to(device)
         cls.model_lm = cls.model_lm.eval().to(device)
         cls.device = device
         cls.is_loaded = True
+
+    @staticmethod
+    def _download_model_data(data_dir: Path):
+        tag = f"v{elaspic2.__version__}"
+        url = (
+            f"https://gitlab.com/elaspic/elaspic-v2/-/raw/{tag}/src/elaspic2/"
+            "plugins/protbert/data/prot_bert_bfd/pytorch_model.bin"
+        )
+        protbert_model_file = data_dir.joinpath("pytorch_model.bin")
+        if not protbert_model_file.is_file():
+            logger.info("Downloading ProtBert model files. This may take several minutes...")
+            urllib.request.urlretrieve(url, protbert_model_file)
 
     @classmethod
     def build(  # type: ignore[override]
