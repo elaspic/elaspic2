@@ -6,3 +6,5 @@ from kmbio.PDB.core import Atom
 Atom.get_coord = lambda self: self.coord
 
 from . import *
+from .types import ELASPIC2Data
+from .elaspic2 import ELASPIC2
