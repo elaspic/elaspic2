@@ -58,12 +58,17 @@ class ProtBert(SequenceTool, MutationAnalyzer):
 
         tag = f"v{elaspic2.__version__}"
         url = (
-            f"https://gitlab.com/elaspic/elaspic-v2/-/raw/{tag}/src/elaspic2/"
+            f"http://gitlab.com/elaspic/elaspic-v2/-/raw/{tag}/src/elaspic2/"
             "plugins/protbert/data/prot_bert_bfd/pytorch_model.bin"
         )
         protbert_model_file = data_dir.joinpath("pytorch_model.bin")
         if not protbert_model_file.is_file() or is_lfs_placeholder(protbert_model_file):
             logger.info("Downloading ProtBert model files. This may take several minutes...")
+            # Pretend to be a browser
+            opener = urllib.request.build_opener()
+            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+            urllib.request.install_opener(opener)
+            # Download files
             urllib.request.urlretrieve(url, protbert_model_file)
 
     @classmethod
