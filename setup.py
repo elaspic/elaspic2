@@ -18,7 +18,13 @@ setup(
     url="https://gitlab.com/ostrokach/elaspic-v2",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    package_data={},
+    package_data={
+        "elaspic2": [
+            "data/pca/*",
+            "data/lgb/*",
+            "plugins/proteinsolver/191f05de/e53-s1952148-d93703104.state",
+        ]
+    },
     include_package_data=True,
     zip_safe=False,
     keywords="elaspic2",
