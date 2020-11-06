@@ -9,7 +9,7 @@ default_context:
   project_slug: "elaspic2"
   project_import: "elaspic2"
   project_short_description: "Predicting the effect of mutations on protein folding and protein-protein interaction."
-  version: "0.1.0"
+  version: "0.1.1"
   create_author_file: "y"
   open_source_license: "MIT License"
   _copy_without_render:
