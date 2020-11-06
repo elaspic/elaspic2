@@ -16,9 +16,11 @@ requirements:
   run:
     - python
     - biopython =1.78
-    - kmbio =2.1.0
-    - kmtools =0.2.8
-    - pytorch >=1.6.0
+    - scikit-learn =0.23
+    - kmbio =2.1
+    - kmtools =0.2
+    - pytorch =1.6
+    - lightgbm =3.0
 
 test:
   imports:
