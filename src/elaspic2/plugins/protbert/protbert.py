@@ -1,4 +1,3 @@
-import importlib.resources
 import logging
 import urllib.request
 from contextlib import contextmanager
@@ -10,6 +9,11 @@ from kmtools.structure_tools.types import DomainMutation as Mutation
 import elaspic2.plugins.protbert.data
 from elaspic2.core import MutationAnalyzer, SequenceTool
 from elaspic2.plugins.protbert.types import ProtBertData
+
+try:
+    import importlib.resources as importlib_resources
+except ImportError:
+    import importlib_resources
 
 logger = logging.getLogger(__name__)
 

@@ -1,4 +1,3 @@
-import importlib.resources
 import json
 from pathlib import Path
 from typing import Dict, List, Optional, Union
@@ -12,6 +11,11 @@ import elaspic2.data
 from elaspic2.plugins.protbert import ProtBert
 from elaspic2.plugins.proteinsolver import ProteinSolver
 from elaspic2.types import COI, ELASPIC2Data
+
+try:
+    import importlib.resources as importlib_resources
+except ImportError:
+    import importlib_resources
 
 
 class ELASPIC2:
@@ -33,7 +37,7 @@ class ELASPIC2:
     @staticmethod
     def _load_pca_models():
         pca_models = {COI.CORE: {}, COI.INTERFACE: {}}
-        with importlib.resources.path(elaspic2.data, "pca") as pca_data_path:
+        with importlib_resources.path(elaspic2.data, "pca") as pca_data_path:
             for pca_file in sorted(pca_data_path.glob("*.pickle")):
                 coi = COI.CORE if "-core" in pca_file.name else COI.INTERFACE
                 pca_models[coi][pca_file.stem] = torch.load(pca_file)
@@ -42,7 +46,7 @@ class ELASPIC2:
     @staticmethod
     def _load_lgb_models():
         lgb_models = {COI.CORE: [], COI.INTERFACE: []}
-        with importlib.resources.path(elaspic2.data, "lgb") as lgb_data_path:
+        with importlib_resources.path(elaspic2.data, "lgb") as lgb_data_path:
             for lgb_file in sorted(lgb_data_path.glob("*.txt")):
                 coi = COI.CORE if "-core" in lgb_file.name else COI.INTERFACE
                 lgb_models[coi].append(lgb.Booster(model_file=lgb_file.as_posix()))
@@ -51,7 +55,7 @@ class ELASPIC2:
     @staticmethod
     def _load_pca_columns():
         pca_columns = {}
-        with importlib.resources.path(elaspic2.data, "pca") as lgb_data_path:
+        with importlib_resources.path(elaspic2.data, "pca") as lgb_data_path:
             for coi in COI:
                 json_file = lgb_data_path.joinpath(f"pca-columns-{coi.value}.json")
                 with json_file.open("rt") as fin:
@@ -61,7 +65,7 @@ class ELASPIC2:
     @staticmethod
     def _load_lgb_columns():
         feature_columns = {}
-        with importlib.resources.path(elaspic2.data, "lgb") as lgb_data_path:
+        with importlib_resources.path(elaspic2.data, "lgb") as lgb_data_path:
             for coi in COI:
                 json_file = lgb_data_path.joinpath(f"feature-columns-{coi.value}.json")
                 with json_file.open("rt") as fin:
