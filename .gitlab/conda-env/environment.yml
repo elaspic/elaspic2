@@ -1,7 +1,7 @@
 name: elaspic2
 channels:
-  # - https://${KIMLAB_CONDA_LOGIN}@conda.proteinsolver.org
-  # - https://${PYROSETTA_CONDA_LOGIN}@conda.graylab.jhu.edu
+  - https://${KIMLAB_CONDA_LOGIN}@conda.proteinsolver.org
+  - https://${PYROSETTA_CONDA_LOGIN}@conda.graylab.jhu.edu
   - conda-forge
   - kimlab
   - ostrokach-forge
@@ -18,10 +18,10 @@ dependencies:
   - kimlab::kmtools >=0.2.8
   - mdtraj >=1.9
   - scikit-learn >=0.23
-  # - salilab::modeller =9.25
+  - salilab::modeller =9.25
   # Rosetta
-  # - pyrosetta =2020.37+release.3ba1aaa
-  # - rosetta-ddg =2020.37
+  - pyrosetta =2020.37+release.3ba1aaa
+  - rosetta-ddg =2020.37
   # Machine learning
   - anaconda::cudatoolkit =10.1
   - lightgbm >=3.0
