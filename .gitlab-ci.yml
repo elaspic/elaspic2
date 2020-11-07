@@ -14,7 +14,7 @@ stages:
 variables:
   PACKAGE_VERSION: "0.1.2"
   PYTHON_VERSION: "3.8"
-  CONDA_ENVIRONMENT: elaspic
+  CONDA_ENVIRONMENT: elaspic2
   GIT_LFS_SKIP_SMUDGE: 1
 
 # === Configurations ===
@@ -24,11 +24,9 @@ variables:
     variables:
       - $UPDATE_PAGES
 
-.configure:
-  extends:
-    - .skip-custom-pipelines
-  before_script:
-    # Set conda envs and pkgs dirs
+.configure-conda:
+  # Set conda envs and pkgs dirs
+  script: &configure-conda
     - |
       cat <<EOF > ~/.condarc
       channel_priority: true
@@ -48,7 +46,9 @@ variables:
 lint:
   stage: lint
   extends:
-    - .configure
+    - .skip-custom-pipelines
+  before_script:
+    - *configure-conda
   script:
     - conda create -n lint -q "python=${PYTHON_VERSION}" isort toml flake8 mypy black
     - source activate lint
@@ -57,15 +57,16 @@ lint:
     - python -m black --config pyproject.toml --check .
     # MyPy does not support namespace packages until this issue gets resolved:
     # https://github.com/python/mypy/issues/1645
-    - echo ${CI_PROJECT_NAME}
-    - python -m mypy -p ${CI_PROJECT_NAME} || true
+    - python -m mypy src || true
 
 # === Build ===
 
 build:
   stage: build
   extends:
-    - .configure
+    - .skip-custom-pipelines
+  before_script:
+    - *configure-conda
   script:
     - conda install -yq conda conda-build conda-verify conda-forge-pinning
     - cd "${CI_PROJECT_DIR}/.gitlab/conda"
@@ -95,6 +96,8 @@ build:
 test:
   stage: test
   image: ubuntu:20.04
+  extends:
+    - .skip-custom-pipelines
   before_script:
     # Install global dependencies
     - apt-get update -y -qq -o=Dpkg::Use-Pty=0
@@ -118,9 +121,8 @@ test:
     - sh miniconda.sh -b -p /opt/conda
     - source /opt/conda/etc/profile.d/conda.sh
     - conda activate root
-    - conda config --set channel_priority true # TODO: strict
-    - conda config --set pip_interop_enabled false
     - conda install -n root -c conda-forge -y -q mamba conda-pack
+    - *configure-conda
   script:
     # Create conda environment
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
