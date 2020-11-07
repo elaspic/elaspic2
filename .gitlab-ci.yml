@@ -57,6 +57,7 @@ lint:
     - python -m black --config pyproject.toml --check .
     # MyPy does not support namespace packages until this issue gets resolved:
     # https://github.com/python/mypy/issues/1645
+    - echo ${CI_PROJECT_NAME}
     - python -m mypy -p ${CI_PROJECT_NAME} || true
 
 # === Build ===
