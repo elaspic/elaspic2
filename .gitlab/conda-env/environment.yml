@@ -26,7 +26,7 @@ dependencies:
   - anaconda::cudatoolkit =10.1
   - lightgbm >=3.0
   - proteinsolver >=0.1.25
-  - pytorch::pytorch >=1.6
+  - pytorch::pytorch =1.7.0
   - transformers >=3.3
   # Binary files
   - bioconda::mmseqs2 >=12.113e3

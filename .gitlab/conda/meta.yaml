@@ -21,7 +21,7 @@ requirements:
     - scikit-learn >=0.23
     - kmbio >=2.1
     - kmtools >=0.2
-    - pytorch >=1.6
+    - pytorch =1.7.0
     - lightgbm >=3.0
 
 test:
