@@ -1,8 +1,9 @@
-biopython==1.78
-brotlipy==0.7.0
-fire==0.3.1
-mdtraj==1.9.4
-mmtf-python==1.1.2
-nglview==2.7.7
-paramiko==2.7.2
-tenacity==6.2.0
+biopython>=1.78,<2.0
+brotlipy>=0.7,<0.8
+fire>=0.3,<0.4
+mdtraj>=1.9,<1.10
+mmtf-python>=1.1,<1.2
+nglview>=2.7,<2.8
+paramiko>=2.7,<2.8
+tenacity>=6.2,<6.3
+tqdm>=4.50,<4.55
