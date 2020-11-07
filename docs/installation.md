@@ -23,13 +23,13 @@ The sources for `elaspic2` can be downloaded from the [GitLab repo].
 You can either clone the public repository:
 
 ```bash
-git clone git://gitlab.com/ostrokach/elaspic2
+git clone git://gitlab.com/elaspic/elaspic2
 ```
 
 Or download the [tarball]:
 
 ```bash
-curl -OL https://gitlab.com/ostrokach/elaspic-v2/repository/master/archive.tar
+curl -OL https://gitlab.com/elaspic/elaspic2/repository/master/archive.tar
 ```
 
 Once you have a copy of the source, you can install it with:
@@ -38,5 +38,5 @@ Once you have a copy of the source, you can install it with:
 python setup.py install
 ```
 
-[GitLab repo]: https://gitlab.com/ostrokach/elaspic-v2
-[tarball]: https://gitlab.com/ostrokach/elaspic-v2/repository/master/archive.tar
+[GitLab repo]: https://gitlab.com/elaspic/elaspic2
+[tarball]: https://gitlab.com/elaspic/elaspic2/repository/master/archive.tar

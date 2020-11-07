@@ -27,6 +27,6 @@ test:
     - elaspic2
 
 about:
-  home: https://gitlab.com/ostrokach/elaspic-v2
+  home: https://gitlab.com/elaspic/elaspic2
   license: MIT License
   summary: "Predicting the effect of mutations on protein folding and protein-protein interaction."

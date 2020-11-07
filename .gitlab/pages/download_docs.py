@@ -21,7 +21,7 @@ from jinja2 import Template
 
 logger = logging.getLogger()
 PROJECT_ROOT = Path(__file__).parent
-URL = "ttps://ostrokach.gitlab.io"
+URL = "ttps://elaspic.gitlab.io"
 
 
 class JobInfo(NamedTuple):

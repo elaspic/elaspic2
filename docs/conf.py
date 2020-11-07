@@ -38,7 +38,7 @@ import elaspic2
 
 # -- General configuration ---------------------------------------------
 
-gitlab_doc_root = "https://gitlab.com/ostrokach/elaspic-v2/-/tree/master/"
+gitlab_doc_root = "https://gitlab.com/elaspic/elaspic2/-/tree/master/"
 
 
 def setup(app):
@@ -156,7 +156,7 @@ html_theme = "msmb_theme"
 html_theme_options = {"collapse_navigation": False, "display_version": True}
 
 # Context is a dictionary passed to the templating engine.
-html_context = {"versions_json_url": "https://elaspic-v2.gitlab.io/versions.json"}
+html_context = {"versions_json_url": "https://elaspic2.gitlab.io/versions.json"}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = [
@@ -231,7 +231,7 @@ html_static_path = ["_static"]
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "elaspic-v2doc"
+htmlhelp_basename = "elaspic2doc"
 
 
 # -- Options for LaTeX output ------------------------------------------

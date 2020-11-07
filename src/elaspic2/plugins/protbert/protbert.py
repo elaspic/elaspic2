@@ -58,7 +58,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
 
         tag = f"v{elaspic2.__version__}"
         url = (
-            f"http://gitlab.com/elaspic/elaspic-v2/-/raw/{tag}/src/elaspic2/"
+            f"http://gitlab.com/elaspic/elaspic2/-/raw/{tag}/src/elaspic2/"
             "plugins/protbert/data/prot_bert_bfd/pytorch_model.bin"
         )
         protbert_model_file = data_dir.joinpath("pytorch_model.bin")
