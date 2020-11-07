@@ -26,7 +26,7 @@ def run(
         ligand_sequence: The sequence of the ligand that is interacting with the protein
             to be mutated. Should map to chain B in `protein_structure.`
         device: Device to use for evaluating mutations. Use "cuda" or "cuda:N" to use
-            the first GPU or the Nth GPU.
+            the first or Nth GPU.
 
     Returns:
         Stability (and affinity) predictions for every mutation.
