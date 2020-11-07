@@ -169,7 +169,9 @@ test:
 docs:
   stage: doc
   extends:
-    - .configure
+    - .skip-custom-pipelines
+  before_script:
+    - *configure-conda
   script:
     # Create conda environment for testing
     - conda update -yq conda
@@ -200,7 +202,9 @@ docs:
 deploy:
   stage: deploy
   extends:
-    - .configure
+    - .skip-custom-pipelines
+  before_script:
+    - *configure-conda
   script:
     - anaconda -t $ANACONDA_TOKEN upload $CI_PROJECT_DIR/conda-bld/*/*.tar.bz2 -u ostrokach-forge --no-progress --force
   only:
@@ -212,7 +216,9 @@ deploy:
 deploy-pypi:
   stage: deploy
   extends:
-    - .configure
+    - .skip-custom-pipelines
+  before_script:
+    - *configure-conda
   script:
     - python -m pip install -q twine wheel
     - python setup.py sdist bdist_wheel
