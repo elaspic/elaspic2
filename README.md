@@ -11,12 +11,12 @@ Predicting the effect of mutations on protein folding and protein-protein intera
 
 The following notebooks can be used to explore the basic functionality of `proteinsolver`.
 
-| Notebook name             | Google Colab                                                                                                                                                                                                   | Description                                                                                                    |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Notebook name             | Google Colab                                                                                                                                                                                               | Description                                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `10_stability_demo.ipynb` | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/master/notebooks/10_stability_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a> | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein stability_.        |
 | `10_affinity_demo.ipynb`  | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/master/notebooks/10_affinity_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a>  | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein binding affinity_. |
 
-See other notebooks in the [`notebooks/`]("notebooks/") directory for more detailed information about how ELASPIC2 models are trained and validated.
+See other notebooks in the [`notebooks/`](tree/master/notebooks/) directory for more detailed information about how ELASPIC2 models are trained and validated.
 
 ## Data
 
