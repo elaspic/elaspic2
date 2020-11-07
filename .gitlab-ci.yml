@@ -133,6 +133,7 @@ test:
 
     # Tests
     - python -c "import torch_sparse"
+    - export SKIP_SLOW_TESTS=true
     - *run-tests
 
     # Clean up
