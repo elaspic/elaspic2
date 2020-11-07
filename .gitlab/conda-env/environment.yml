@@ -1,7 +1,7 @@
 name: elaspic2
 channels:
-  - https://${KIMLAB_CONDA_LOGIN}@conda.proteinsolver.org
-  - https://${PYROSETTA_CONDA_LOGIN}@conda.graylab.jhu.edu
+  # - https://${KIMLAB_CONDA_LOGIN}@conda.proteinsolver.org
+  # - https://${PYROSETTA_CONDA_LOGIN}@conda.graylab.jhu.edu
   - conda-forge
   - kimlab
   - ostrokach-forge
@@ -13,25 +13,24 @@ dependencies:
   - conda
   - pip
   # Biology
-  - biopython =1.78
-  - kimlab::kmbio =2.1.0
-  - kimlab::kmtools =0.2.8
-  - mdtraj =1.9.4
-  - salilab::modeller =9.25
+  - biopython >=1.78
+  - kimlab::kmbio >=2.1
+  - kimlab::kmtools >=0.2.8
+  - mdtraj >=1.9
+  - scikit-learn >=0.23
+  # - salilab::modeller =9.25
   # Rosetta
-  - pyrosetta =2020.37+release.3ba1aaa
-  - rosetta-ddg =2020.37
+  # - pyrosetta =2020.37+release.3ba1aaa
+  # - rosetta-ddg =2020.37
   # Machine learning
-  - anaconda::cudatoolkit =10.1.*
-  - lightgbm =3.0.0
-  - proteinsolver =0.1.24
-  - pytorch::pytorch =1.6.0
-  - transformers =3.3.1
+  - anaconda::cudatoolkit =10.1
+  - lightgbm >=3.0
+  - proteinsolver >=0.1.25
+  - pytorch::pytorch >=1.6
+  - transformers >=3.3
   # Binary files
-  - bioconda::mmseqs2 =12.113e3
-  - bioconda::muscle =3.8.1551
-  # For cluster computing
-  - papermill =2.2.0
+  - bioconda::mmseqs2 >=12.113e3
+  - bioconda::muscle >=3.8.1551
   # For testing
-  - pytest
-  - pytest-cov
+  - pytest >=6.1
+  - pytest-cov >=2.10

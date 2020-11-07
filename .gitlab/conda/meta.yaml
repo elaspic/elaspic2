@@ -15,14 +15,14 @@ requirements:
     - python
   run:
     - python
-    - tqdm =4.50
-    - fire =0.3
-    - biopython =1.78
-    - scikit-learn =0.23
-    - kmbio =2.1
-    - kmtools =0.2
-    - pytorch =1.6
-    - lightgbm =3.0
+    - tqdm >=4.50
+    - fire >=0.3
+    - biopython >=1.78
+    - scikit-learn >=0.23
+    - kmbio >=2.1
+    - kmtools >=0.2
+    - pytorch >=1.6
+    - lightgbm >=3.0
 
 test:
   imports:
