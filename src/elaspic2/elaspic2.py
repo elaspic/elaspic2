@@ -76,7 +76,7 @@ class ELASPIC2:
         self,
         structure_file: Union[Path, str],
         protein_sequence: str,
-        ligand_sequence: str,
+        ligand_sequence: Optional[str],
         remove_hetatms=True,
     ) -> ELASPIC2Data:
         protbert_data = ProtBert.build(protein_sequence, ligand_sequence, remove_hetatms)
