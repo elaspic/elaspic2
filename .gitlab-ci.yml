@@ -38,6 +38,8 @@ variables:
         - ostrokach-forge
         - bioconda
         - salilab
+        - https://${KIMLAB_CONDA_LOGIN}@conda.proteinsolver.org
+        - https://${PYROSETTA_CONDA_LOGIN}@conda.graylab.jhu.edu
         - omnia
       EOF
 
@@ -81,18 +83,6 @@ build:
 
 # === Test ===
 
-.run-tests:
-  script: &run-tests
-    - PKG_INSTALL_DIR=$(python -c "import elaspic2; print(elaspic2.__path__[0])")
-    - python -m pytest
-      -c setup.cfg
-      --cov="${PKG_INSTALL_DIR}"
-      --cov-config=setup.cfg
-      --color=yes
-      "tests/"
-    - mkdir coverage
-    - mv .coverage coverage/.coverage.all
-
 test:
   stage: test
   image: ubuntu:20.04
@@ -128,35 +118,53 @@ test:
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
     - cat .gitlab/conda-env/environment-subst.yml
     - conda env create -q -n ${CONDA_ENVIRONMENT} -f .gitlab/conda-env/environment-subst.yml
-    - conda activate ${CONDA_ENVIRONMENT}
 
     # Install pypi packages
+    - conda activate ${CONDA_ENVIRONMENT}
     - conda install -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
     - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
+    - conda list -n ${CONDA_ENVIRONMENT}
 
     # Tests
-    - python -c "import torch_sparse"
     - export SKIP_SLOW_TESTS=true
-    - *run-tests
+    - PKG_INSTALL_DIR=$(python -c "import elaspic2; print(elaspic2.__path__[0])")
+    - python -c "import torch_sparse"
+    - python -m pytest
+      -c setup.cfg
+      --cov="${PKG_INSTALL_DIR}"
+      --cov-config=setup.cfg
+      --color=yes
+      --ignore="tests/plugins/modeller"
+      --ignore="tests/plugins/rosetta_ddg"
+      "tests/"
+    - mkdir coverage
+    - mv .coverage coverage/.coverage.base
 
-    # Clean up
-    - conda deactivate
-
-    # Skip the rest unless building a release
+    # Export the environment if building a release
     - |
-      if [ "$CI_BUILD_REF_NAME" != "master" ]; then
-        echo "Skipping deploy for non-master branch $CI_BUILD_REF_NAME"
-        exit 0
+      if [ "$CI_BUILD_REF_NAME" = "master" ]; then
+        conda deactivate
+        ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_REF_NAME}.tar.gz
+        conda pack -q -n ${CONDA_ENVIRONMENT} -o ${ENVIRONMENT_FILE}
+        ls -lSh ${ENVIRONMENT_FILE}
+        rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CONDA_ENVIRONMENT}/
+        conda activate ${CONDA_ENVIRONMENT}
       fi
 
-    # Pack the environment
-    - conda list -n ${CONDA_ENVIRONMENT}
-    - export ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_REF_NAME}.tar.gz
-    - conda pack -q -n ${CONDA_ENVIRONMENT} -o ${ENVIRONMENT_FILE}
-    - ls -lSh ${ENVIRONMENT_FILE}
+    # Install optional dependencies
+    - conda install "modeller=9.25" "pyrosetta=2020.37+release.3ba1aaa" "rosetta-ddg=2020.37"
 
-    # Upload the environment to shared folder
-    - rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CONDA_ENVIRONMENT}/
+    # Test optional plugins
+    - python -m pytest
+      -c setup.cfg
+      --cov="${PKG_INSTALL_DIR}"
+      --cov-config=setup.cfg
+      --color=yes
+      --ignore="tests/plugins/modeller"
+      --ignore="tests/plugins/rosetta_ddg"
+      "tests/"
+    - mkdir coverage
+    - mv .coverage coverage/.coverage.extra
   dependencies:
     - build
   artifacts:
