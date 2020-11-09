@@ -241,7 +241,7 @@ trigger-custom-pipelines:
   extends:
     - .skip-custom-pipelines
   image:
-    name: ubuntu:18.04
+    name: ubuntu:20.04
   before_script:
     - apt-get -y -qq update
     - apt-get -y -qq install curl
