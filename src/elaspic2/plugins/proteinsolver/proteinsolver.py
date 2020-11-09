@@ -18,7 +18,7 @@ class ProteinSolver(StructureTool, MutationAnalyzer):
     is_loaded: bool = False
 
     @classmethod
-    def load_model(cls, model_name="191f05de", device=torch.device("cpu")) -> None:
+    def load_model(cls, model_name="ps_191f05de", device=torch.device("cpu")) -> None:
         # Need to import proteinsolver in order for the torch_geometric.utils.scatter_ monkeypatch
         # to be applied.
         import proteinsolver  # noqa
