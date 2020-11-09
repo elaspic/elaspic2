@@ -160,9 +160,8 @@ test:
       --cov="${PKG_INSTALL_DIR}"
       --cov-config=setup.cfg
       --color=yes
-      --ignore="tests/plugins/modeller"
-      --ignore="tests/plugins/rosetta_ddg"
-      "tests/"
+      "tests/plugins/modeller"
+      "tests/plugins/rosetta_ddg"
     - mv .coverage coverage/.coverage.extra
   dependencies:
     - build
