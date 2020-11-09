@@ -128,6 +128,7 @@ test:
     # Tests
     - export SKIP_SLOW_TESTS=true
     - PKG_INSTALL_DIR=$(python -c "import elaspic2; print(elaspic2.__path__[0])")
+    - mkdir coverage
     - python -c "import torch_sparse"
     - python -m pytest
       -c setup.cfg
@@ -137,12 +138,11 @@ test:
       --ignore="tests/plugins/modeller"
       --ignore="tests/plugins/rosetta_ddg"
       "tests/"
-    - mkdir coverage
     - mv .coverage coverage/.coverage.base
 
     # Export the environment if building a release
     - |
-      if [ "$CI_BUILD_REF_NAME" = "master" ]; then
+      if [[ "$CI_BUILD_REF_NAME" = "master" || ${CI_COMMIT_TAG} == v* ]]; then
         conda deactivate
         ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_REF_NAME}.tar.gz
         conda pack -q -n ${CONDA_ENVIRONMENT} -o ${ENVIRONMENT_FILE}
@@ -163,7 +163,6 @@ test:
       --ignore="tests/plugins/modeller"
       --ignore="tests/plugins/rosetta_ddg"
       "tests/"
-    - mkdir coverage
     - mv .coverage coverage/.coverage.extra
   dependencies:
     - build
