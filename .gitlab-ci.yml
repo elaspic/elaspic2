@@ -14,7 +14,6 @@ stages:
 variables:
   PACKAGE_VERSION: "0.1.2"
   PYTHON_VERSION: "3.8"
-  CONDA_ENVIRONMENT: elaspic2
   GIT_LFS_SKIP_SMUDGE: 1
 
 # === Configurations ===
@@ -118,13 +117,13 @@ test:
     # Create conda environment
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
     - cat .gitlab/conda-env/environment-subst.yml
-    - conda env create -q -n ${CONDA_ENVIRONMENT} -f .gitlab/conda-env/environment-subst.yml
+    - conda env create -q -n ${CI_PROJECT_NAME} -f .gitlab/conda-env/environment-subst.yml
 
     # Install pypi packages
-    - conda activate ${CONDA_ENVIRONMENT}
+    - conda activate ${CI_PROJECT_NAME}
     - conda install -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
     - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
-    - conda list -n ${CONDA_ENVIRONMENT}
+    - conda list -n ${CI_PROJECT_NAME}
 
     # Tests
     - export SKIP_SLOW_TESTS=true
@@ -143,13 +142,18 @@ test:
 
     # Export the environment if building a release
     - |
-      if [[ ${CI_COMMIT_TAG} == v* ]]; then
+      if [[ "${CI_BUILD_REF_NAME}" == "master" || ${CI_COMMIT_TAG} == v* ]]; then
         conda deactivate
-        ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_TAG}.tar.gz
-        conda pack -q -n ${CONDA_ENVIRONMENT} -o ${ENVIRONMENT_FILE}
+        if [[ ${CI_COMMIT_TAG} == v* ]] ; then
+          ENV_VERSION=${CI_COMMIT_TAG}
+        else
+          ENV_VERSION="latest"
+        fi
+        ENVIRONMENT_FILE=${CI_PROJECT_NAME}-${ENV_VERSION}.tar.gz
+        conda pack -q -n ${CI_PROJECT_NAME} -o ${ENVIRONMENT_FILE}
         ls -lSh ${ENVIRONMENT_FILE}
-        rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CONDA_ENVIRONMENT}/
-        conda activate ${CONDA_ENVIRONMENT}
+        rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CI_PROJECT_NAME}/
+        conda activate ${CI_PROJECT_NAME}
       fi
 
     # Install optional dependencies
