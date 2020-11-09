@@ -163,6 +163,9 @@ test:
       "tests/plugins/modeller"
       "tests/plugins/rosetta_ddg"
     - mv .coverage coverage/.coverage.extra
+
+    # Need to to change folder file permissions if files are created in a different container
+    - chmod ugo+rwX -R coverage/
   dependencies:
     - build
   artifacts:
