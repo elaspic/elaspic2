@@ -22,7 +22,7 @@ variables:
 .skip-custom-pipelines:
   except:
     variables:
-      - IS_CUSTOM_PIPELINE
+      - $IS_CUSTOM_PIPELINE
 
 .configure-conda:
   # Set conda envs and pkgs dirs
