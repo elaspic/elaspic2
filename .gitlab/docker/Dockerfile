@@ -12,6 +12,8 @@ RUN apt-get -qq update \
 
 SHELL ["/bin/bash", "-c"]
 
+RUN groupadd -g 32766 lucky
+
 RUN mkdir -p /opt/docker/bin /opt/conda \
   && curl -sS https://conda-envs.proteinsolver.org/${ENV_NAME}/${ENV_NAME}-${ENV_VERSION}.tar.gz | tar -xz -C /opt/conda/ \
   && . /opt/conda/bin/activate \
@@ -21,7 +23,12 @@ RUN mkdir -p /opt/docker/bin /opt/conda \
   && chgrp -R lucky /opt/conda \
   && chmod -R g=u /opt/conda
 
-COPY .gitlab/docker/entrypoint /opt/docker/bin/entrypoint
+# Install additional conda packages
+# RUN . /opt/conda/etc/profile.d/conda.sh \
+#   && conda activate \
+#   && conda install -yq -c conda-forge su-exec
+
+COPY entrypoint /opt/docker/bin/entrypoint
 
 # Ensure that all containers start with tini and the user selected process.
 # Activate the `conda` environment `base` and the devtoolset compiler.
