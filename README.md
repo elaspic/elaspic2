@@ -28,22 +28,27 @@ ELASPIC2_JOBS_API = "https://elaspic.uc.r.appspot.com/jobs/"
 
 mutation_info = {
     "protein_structure_url": "https://files.rcsb.org/download/1MFG.pdb",
-    "protein_sequence": "GSMEIRVRVEKDPELGFSISGGVGGRGNPFRPDDDGIFVTRVQPEGPASKLLQPGDKIIQANGYSFINIEHGQAVSLLKTFQNTVELIIVREVSS",
+    "protein_sequence": (
+        "GSMEIRVRVEKDPELGFSISGGVGGRGNPFRPDDDGIFVTRVQPEGPASKLLQPGDKIIQANGYSFINI"
+        "EHGQAVSLLKTFQNTVELIIVREVSS"
+    ),
     "mutations": "G1A,G1C",
     "ligand_sequence": "EYLGLDVPV",
 }
 
+# Submit new job
 job_request = requests.post(ELASPIC2_JOBS_API, json=mutation_info).json()
-print("Waiting for job to finish", end="")
 while True:
+    # Wait for job to finish
     time.sleep(10)
     job_status = requests.get(job_request["web_url"]).json()
     if job_status["status"] in ["error", "success"]:
         break
-    print(".", end="")
-print()
+# Collect results
 job_result = requests.get(job_status["web_url"]).json()
+# Delete job (optional)
 requests.delete(job_request["web_url"]).raise_for_status()
+# Show results
 print(job_result)
 ```
 
