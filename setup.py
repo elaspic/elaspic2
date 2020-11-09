@@ -27,7 +27,9 @@ setup(
         "elaspic2": [
             "data/pca/*",
             "data/lgb/*",
-            "plugins/proteinsolver/191f05de/e53-s1952148-d93703104.state",
+            "plugins/proteinsolver/data/191f05de/e53-s1952148-d93703104.state",
+            "plugins/protbert/data/prot_bert_bfd/config.json",
+            "plugins/protbert/data/prot_bert_bfd/vocab.txt",
         ]
     },
     install_requires=read_requirements(),
