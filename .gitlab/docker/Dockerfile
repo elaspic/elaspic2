@@ -10,10 +10,14 @@ RUN apt-get -qq update \
   ssh \
   && rm -rf /var/lib/apt/lists/*
 
+SHELL ["/bin/bash", "-c"]
+
 RUN mkdir -p /opt/docker/bin /opt/conda \
   && curl -sS https://conda-envs.proteinsolver.org/${ENV_NAME}/${ENV_NAME}-${ENV_VERSION}.tar.gz | tar -xz -C /opt/conda/ \
-  && source /opt/conda/bin/activate \
+  && . /opt/conda/bin/activate \
   && conda-unpack \
+  && python -c "from elaspic2.plugins.protbert import ProtBert; ProtBert.load_model()" \
+  && python -c "from elaspic2.plugins.protbert import ProteinSolver; ProteinSolver.load_model()" \
   && chgrp -R lucky /opt/conda \
   && chmod -R g=u /opt/conda
 
