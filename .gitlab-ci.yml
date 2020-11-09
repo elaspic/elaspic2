@@ -22,7 +22,8 @@ variables:
 .skip-custom-pipelines:
   except:
     variables:
-      - $IS_CUSTOM_PIPELINE
+      - $UPDATE_PAGES
+      - $BUILD_IMAGE_WITH_TAG
 
 .configure-conda:
   # Set conda envs and pkgs dirs
@@ -218,7 +219,6 @@ deploy:
     - anaconda -t $ANACONDA_TOKEN upload $CI_PROJECT_DIR/conda-bld/*/*.tar.bz2 -u ostrokach-forge --no-progress --force
   only:
     - tags
-  allow_failure: true # TODO: Change when no longer testing.
   dependencies:
     - build
 
@@ -234,7 +234,6 @@ deploy-pypi:
     - twine upload dist/*
   only:
     - tags
-  allow_failure: true # TODO: Change when no longer testing.
 
 trigger-custom-pipelines:
   stage: deploy
@@ -250,15 +249,13 @@ trigger-custom-pipelines:
     - curl --request POST
       --form token="${CI_JOB_TOKEN}"
       --form ref=${CI_COMMIT_TAG}
-      --form "variables[IS_CUSTOM_PIPELINE]=true"
       --form "variables[UPDATE_PAGES]=true"
       https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline
     # Build a docker image
     - curl --request POST
       --form token="${CI_JOB_TOKEN}"
       --form ref=${CI_COMMIT_TAG}
-      --form "variables[IS_CUSTOM_PIPELINE]=true"
-      --form "variables[IMAGE_TAG]=${CI_JOB_TOKEN}"
+      --form "variables[BUILD_IMAGE_WITH_TAG]=${CI_JOB_TOKEN}"
       https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline
   only:
     - tags
@@ -296,7 +293,9 @@ build-image:
   services:
     - docker:dind
   script:
-    - if [[ ${IMAGE_TAG} != v* ]]; then
+    - if [[ ${BUILD_IMAGE_WITH_TAG} == v* ]]; then
+        IMAGE_TAG=${BUILD_IMAGE_WITH_TAG}
+      else
         IMAGE_TAG=latest
       fi
     - echo "${CI_REGISTRY_IMAGE}:${IMAGE_TAG}"
@@ -305,4 +304,4 @@ build-image:
     - docker push "${CI_REGISTRY_IMAGE}:${IMAGE_TAG}"
   only:
     variables:
-      - $IMAGE_TAG
+      - $BUILD_IMAGE_WITH_TAG
