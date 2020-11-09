@@ -297,11 +297,7 @@ build-image:
   services:
     - docker:dind
   script:
-    - if [[ ${BUILD_IMAGE_WITH_TAG} == v* ]]; then
-        IMAGE_TAG=${BUILD_IMAGE_WITH_TAG}
-      else
-        IMAGE_TAG=latest
-      fi
+    - IMAGE_TAG=${BUILD_IMAGE_WITH_TAG}
     - echo "${CI_REGISTRY_IMAGE}:${IMAGE_TAG}"
     - docker login registry.gitlab.com -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
     - docker build --build-arg ENV_VERSION=${IMAGE_TAG} -t "${CI_REGISTRY_IMAGE}:${IMAGE_TAG}" .gitlab/docker
