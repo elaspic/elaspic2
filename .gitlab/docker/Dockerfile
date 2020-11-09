@@ -1,7 +1,7 @@
 FROM nvidia/cuda:10.1-runtime-ubuntu18.04
 
 ARG ENV_NAME=elaspic2
-ARG ENV_VERSION=master
+ARG ENV_VERSION=latest
 
 RUN apt-get -qq update \
   && apt-get -y -qq install \
@@ -17,7 +17,7 @@ RUN mkdir -p /opt/docker/bin /opt/conda \
   && . /opt/conda/bin/activate \
   && conda-unpack \
   && python -c "from elaspic2.plugins.protbert import ProtBert; ProtBert.load_model()" \
-  && python -c "from elaspic2.plugins.protbert import ProteinSolver; ProteinSolver.load_model()" \
+  && python -c "from elaspic2.plugins.proteinsolver import ProteinSolver; ProteinSolver.load_model()" \
   && chgrp -R lucky /opt/conda \
   && chmod -R g=u /opt/conda
 
