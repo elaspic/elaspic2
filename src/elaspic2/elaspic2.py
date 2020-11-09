@@ -1,4 +1,5 @@
 import json
+import tempfile
 from pathlib import Path
 from typing import Dict, List, Optional, Union
 
@@ -6,11 +7,14 @@ import lightgbm as lgb
 import numpy as np
 import pandas as pd
 import torch
+from kmbio import PDB
+from kmtools import structure_tools
 
 import elaspic2.data
 from elaspic2.plugins.protbert import ProtBert
 from elaspic2.plugins.proteinsolver import ProteinSolver
 from elaspic2.types import COI, ELASPIC2Data
+from elaspic2.utils import guess_domain_defs
 
 try:
     import importlib.resources as importlib_resources
@@ -79,10 +83,33 @@ class ELASPIC2:
         ligand_sequence: Optional[str],
         remove_hetatms=True,
     ) -> ELASPIC2Data:
-        protbert_data = ProtBert.build(protein_sequence, ligand_sequence, remove_hetatms)
-        proteinsolver_data = ProteinSolver.build(
-            structure_file, protein_sequence, ligand_sequence, remove_hetatms
+        structure = PDB.load(structure_file)
+        protein_domain_def, ligand_domain_def = guess_domain_defs(
+            structure, protein_sequence, ligand_sequence, remove_hetatms=remove_hetatms
         )
+        if protein_domain_def is None or (
+            ligand_sequence is not None and ligand_domain_def is None
+        ):
+            raise ValueError(
+                "Cound not find protein and / or ligand sequence in the provided structure file."
+            )
+
+        domain_defs = (
+            [protein_domain_def]
+            if ligand_sequence is None
+            else [protein_domain_def, ligand_domain_def]
+        )
+        structure_new = structure_tools.extract_domain(
+            structure, domain_defs, remove_hetatms=remove_hetatms
+        )
+
+        with tempfile.NamedTemporaryFile(suffix=".pdb") as pdb_file_obj:
+            PDB.save(structure_new, pdb_file_obj.name)
+            protbert_data = ProtBert.build(protein_sequence, ligand_sequence, remove_hetatms)
+            proteinsolver_data = ProteinSolver.build(
+                pdb_file_obj.name, protein_sequence, ligand_sequence, remove_hetatms
+            )
+
         data = ELASPIC2Data(ligand_sequence is not None, protbert_data, proteinsolver_data)
         return data
 

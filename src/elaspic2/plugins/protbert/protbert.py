@@ -2,6 +2,7 @@ import logging
 import urllib.request
 from contextlib import contextmanager
 from pathlib import Path
+from typing import Optional
 
 import torch
 from kmtools.structure_tools.types import DomainMutation as Mutation
@@ -73,7 +74,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
 
     @classmethod
     def build(  # type: ignore[override]
-        cls, sequence: str, ligand_sequence: str, remove_hetatms=True
+        cls, sequence: str, ligand_sequence: Optional[str], remove_hetatms=True
     ) -> ProtBertData:
         if ligand_sequence is not None:
             sequence += ligand_sequence

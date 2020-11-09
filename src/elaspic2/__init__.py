@@ -1,5 +1,5 @@
 __version__ = "0.1.2"
-__all__ = ["core", "plugins"]
+__all__ = ["core", "utils", "plugins"]
 
 from kmbio.PDB.core import Atom
 

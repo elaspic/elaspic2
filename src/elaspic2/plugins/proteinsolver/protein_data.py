@@ -6,11 +6,11 @@ from kmtools import structure_tools
 from kmtools.structure_tools.types import DomainMutation as Mutation
 
 
-def extract_seq_and_adj(structure, chain_ids, remove_hetatms=False):
+def extract_seq_and_adj(structure, chain_idxs, remove_hetatms=False):
     from proteinsolver.utils import ProteinData
 
     domain, result_df = get_interaction_dataset_wdistances(
-        structure, 0, chain_ids, r_cutoff=12, remove_hetatms=remove_hetatms
+        structure, 0, chain_idxs, r_cutoff=12, remove_hetatms=remove_hetatms
     )
     domain_sequence = structure_tools.get_chain_sequence(
         domain, if_unknown="replace", unknown_residue_marker=("" if remove_hetatms else "X")
@@ -27,13 +27,13 @@ def extract_seq_and_adj(structure, chain_ids, remove_hetatms=False):
 
 
 def get_interaction_dataset_wdistances(
-    structure, model_id, chain_ids, r_cutoff=12, remove_hetatms=False
+    structure, model_id, chain_idxs, r_cutoff=12, remove_hetatms=False
 ):
     domain_defs = []
-    for chain_id in chain_ids:
-        chain = structure[0][chain_id]
+    for chain_idx in chain_idxs:
+        chain = list(structure[0])[chain_idx]
         num_residues = len(list(chain.residues))
-        domain_def = structure_tools.DomainDef(model_id, chain_id, 1, num_residues)
+        domain_def = structure_tools.DomainDef(model_id, chain.id, 1, num_residues)
         domain_defs.append(domain_def)
 
     domain_structure = structure_tools.extract_domain(
