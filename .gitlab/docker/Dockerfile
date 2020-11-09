@@ -1,8 +1,7 @@
-# FROM nvidia/cuda:10.1-runtime-ubuntu18.04
-FROM ubuntu:20.04
+FROM nvidia/cuda:10.1-runtime-ubuntu18.04
 
 ARG ENV_NAME=elaspic2
-ARG ENV_VERSION=latest
+ARG ENV_VERSION=master
 
 RUN apt-get -qq update \
   && apt-get -y -qq install \
@@ -11,5 +10,17 @@ RUN apt-get -qq update \
   ssh \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /opt/conda/envs/${ENV_NAME} \
-  && curl -sS https://conda-envs.proteinsolver.org/${ENV_NAME}/${ENV_NAME}-${ENV_VERSION}.tar.gz | tar -xz -C /opt/conda/envs/${ENV_NAME}
+RUN mkdir -p /opt/docker/bin /opt/conda \
+  && curl -sS https://conda-envs.proteinsolver.org/${ENV_NAME}/${ENV_NAME}-${ENV_VERSION}.tar.gz | tar -xz -C /opt/conda/ \
+  && source /opt/conda/bin/activate \
+  && conda-unpack \
+  && chgrp -R lucky /opt/conda \
+  && chmod -R g=u /opt/conda
+
+COPY .gitlab/docker/entrypoint /opt/docker/bin/entrypoint
+
+# Ensure that all containers start with tini and the user selected process.
+# Activate the `conda` environment `base` and the devtoolset compiler.
+# Provide a default command (`bash`), which will start if the user doesn't specify one.
+ENTRYPOINT [ "/opt/conda/bin/tini", "--", "/opt/docker/bin/entrypoint" ]
+CMD [ "/bin/bash" ]
