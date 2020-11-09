@@ -17,7 +17,7 @@ ELASPIC2 has been integrated into the original ELASPIC web server: <http://elasp
 
 ELASPIC2 is accessible through a REST API, documented at: <https://elaspic.uc.r.appspot.com/docs>.
 
-The following code snippet shows how the REST API can be used from Python.
+The following code snippet shows how the REST API can be accessed from within Python.
 
 ```python
 import json
@@ -36,10 +36,10 @@ mutation_info = {
     "ligand_sequence": "EYLGLDVPV",
 }
 
-# Submit new job
+# Submit a job
 job_request = requests.post(ELASPIC2_JOBS_API, json=mutation_info).json()
 while True:
-    # Wait for job to finish
+    # Wait for the job to finish
     time.sleep(10)
     job_status = requests.get(job_request["web_url"]).json()
     if job_status["status"] in ["error", "success"]:
@@ -50,16 +50,6 @@ job_result = requests.get(job_status["web_url"]).json()
 requests.delete(job_request["web_url"]).raise_for_status()
 # Show results
 print(job_result)
-```
-
-Executing the code above should produce output similar to the following.
-
-```log
-Waiting for job to finish..
-[
-  {'mutation': 'G1A', 'protbert_core': 0.011648587882518768, 'proteinsolver_core': 0.7335909865796566, 'el2core': 0.3672627929817027, 'protbert_interface': 0.019379954785108566, 'proteinsolver_interface': 0.6837433353066444, 'el2interface': -0.969817502829359},
-  {'mutation': 'G1C', 'protbert_core': 0.042313314974308014, 'proteinsolver_core': 0.7710323920473456, 'el2core': 1.4015814564056857, 'protbert_interface': 0.04970591701567173, 'proteinsolver_interface': 0.7245333794271573, 'el2interface': 0.3845074588811436}
-]
 ```
 
 ### Demo notebooks
