@@ -22,7 +22,7 @@ variables:
 .skip-custom-pipelines:
   except:
     variables:
-      - $UPDATE_PAGES
+      - IS_CUSTOM_PIPELINE
 
 .configure-conda:
   # Set conda envs and pkgs dirs
@@ -142,9 +142,9 @@ test:
 
     # Export the environment if building a release
     - |
-      if [[ "$CI_BUILD_REF_NAME" = "master" || ${CI_COMMIT_TAG} == v* ]]; then
+      if [[ ${CI_COMMIT_TAG} == v* ]]; then
         conda deactivate
-        ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_REF_NAME}.tar.gz
+        ENVIRONMENT_FILE=${CONDA_ENVIRONMENT}-${CI_COMMIT_TAG}.tar.gz
         conda pack -q -n ${CONDA_ENVIRONMENT} -o ${ENVIRONMENT_FILE}
         ls -lSh ${ENVIRONMENT_FILE}
         rsync -rv --info=progress2 -p --chmod=ug=rwX,o=rX "${ENVIRONMENT_FILE}" strokach@conda-envs.proteinsolver.org:/share/conda-envs/${CONDA_ENVIRONMENT}/
@@ -250,7 +250,15 @@ trigger-custom-pipelines:
     - curl --request POST
       --form token="${CI_JOB_TOKEN}"
       --form ref=${CI_COMMIT_TAG}
+      --form "variables[IS_CUSTOM_PIPELINE]=true"
       --form "variables[UPDATE_PAGES]=true"
+      https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline
+    # Build a docker image
+    - curl --request POST
+      --form token="${CI_JOB_TOKEN}"
+      --form ref=${CI_COMMIT_TAG}
+      --form "variables[IS_CUSTOM_PIPELINE]=true"
+      --form "variables[IMAGE_TAG]=${CI_JOB_TOKEN}"
       https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline
   only:
     - tags
@@ -279,3 +287,22 @@ pages:
   only:
     variables:
       - $UPDATE_PAGES
+
+build-image:
+  image:
+    name: docker:latest
+  tags:
+    - east-cloud
+  services:
+    - docker:dind
+  script:
+    - if [[ ${IMAGE_TAG} != v* ]]; then
+        IMAGE_TAG=latest
+      fi
+    - echo "${CI_REGISTRY_IMAGE}:${IMAGE_TAG}"
+    - docker login registry.gitlab.com -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+    - docker build --build-arg ENV_VERSION=${IMAGE_TAG} -t "${CI_REGISTRY_IMAGE}:${IMAGE_TAG}" .gitlab/docker
+    - docker push "${CI_REGISTRY_IMAGE}:${IMAGE_TAG}"
+  only:
+    variables:
+      - $IMAGE_TAG
