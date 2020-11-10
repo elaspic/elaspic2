@@ -17,12 +17,14 @@ requirements:
     - python
     - tqdm >=4.50
     - fire >=0.3
-    - biopython >=1.78
     - scikit-learn >=0.23
+    - lightgbm >=3.0
+    - pytorch =1.7.0
+    - biopython >=1.78
     - kmbio >=2.1
     - kmtools >=0.2
-    - pytorch =1.7.0
-    - lightgbm >=3.0
+    - proteinsolver >=0.1.25
+    - transformers >=3.3.1
 
 test:
   imports:
