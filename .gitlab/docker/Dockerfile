@@ -3,8 +3,8 @@ FROM nvidia/cuda:10.1-runtime-ubuntu18.04
 ARG ENV_NAME=elaspic2
 ARG ENV_VERSION=latest
 
-RUN apt-get -qq update \
-  && apt-get -y -qq install \
+RUN apt-get -qq -o=Dpkg::Use-Pty=0 update \
+  && apt-get -y -qq -o=Dpkg::Use-Pty=0 install \
   curl \
   wget \
   ssh \
