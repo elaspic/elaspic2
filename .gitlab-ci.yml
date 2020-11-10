@@ -23,6 +23,7 @@ variables:
     variables:
       - $UPDATE_PAGES
       - $BUILD_IMAGE_WITH_TAG
+      - $MIRROR_TO_GITLAB
 
 .configure-conda:
   # Set conda envs and pkgs dirs
@@ -83,6 +84,15 @@ build:
 
 # === Test ===
 
+.install-ssh-client:
+  script: &install-ssh-client
+    - "which ssh-agent || ( apt-get install -y -qq -o=Dpkg::Use-Pty=0 openssh-client -y )"
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$KNOWN_HOSTS" >> ~/.ssh/known_hosts
+
 test:
   stage: test
   image: ubuntu:20.04
@@ -94,13 +104,7 @@ test:
     - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync gettext-base
 
     # Install ssh client
-    - "which ssh-agent || ( apt-get install -y -qq -o=Dpkg::Use-Pty=0 openssh-client -y )"
-    # - apk add openssh
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - *install-ssh-client
 
     # Test that ssh client works
     - ssh strokach@conda-envs.proteinsolver.org "echo hello"
@@ -290,10 +294,11 @@ pages:
       - $UPDATE_PAGES
 
 build-image:
+  stage: custom
   image:
     name: docker:latest
-  tags:
-    - east-cloud
+  # tags:
+  #   - east-cloud
   services:
     - docker:dind
   script:
@@ -305,3 +310,17 @@ build-image:
   only:
     variables:
       - $BUILD_IMAGE_WITH_TAG
+
+mirror-to-gitlab:
+  stage: custom
+  before_script:
+    - export SSH_PRIVATE_KEY="${GITHUB_SSH_PRIVATE_KEY}"
+    - export KNOWN_HOSTS="${GITHUB_KNOWN_HOSTS}"
+    - *install-ssh-client
+  script:
+    - git remote add mirror git@github.com:elaspic/elaspic2.git
+    - git push mirror master --force
+    - git push mirror master --tags --force
+  only:
+    variables:
+      - $MIRROR_TO_GITLAB
