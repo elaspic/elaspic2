@@ -328,6 +328,8 @@ mirror-to-gitlab:
     - git remote add mirror git@github.com:elaspic/elaspic2.git
     - ls -al
     - git status
+    - git branch
+    - git tag
     - git push mirror master --force
     - git push mirror master --tags --force
   only:
