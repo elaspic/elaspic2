@@ -97,7 +97,9 @@ conda-unpack
 
 ### Conda
 
-`ELASPIC2` can be installed using `conda`. However, the `torch-geometric` dependencies have to be installed separately. Replace `cudatoolkit=10.1` and `cu101` with the desired CUDA version.
+`ELASPIC2` can be installed using `conda`. However, the `torch-geometric` dependencies have to be installed separately.
+
+Replace `cudatoolkit=10.1` and `cu101` with the desired CUDA version.
 
 ```bash
 conda create -n elaspic2 -c pytorch -c ostrokach-forge -c conda-forge -c defaults elaspic2 "cudatoolkit=10.1"
@@ -111,7 +113,9 @@ pip install "torch-geometric==1.6.1"
 
 ### Python package index (PyPI)
 
-`ELASPIC2` can be installed using `pip`. However, the `torch` and `torch-geometric` dependencies have to be installed from external channels. Replace `cu101` with the desired CUDA version.
+`ELASPIC2` can be installed using `pip`. However, the `torch` and `torch-geometric` dependencies have to be installed from external channels.
+
+Replace `cu101` with the desired CUDA version.
 
 ```bash
 pip install elaspic2
