@@ -318,7 +318,7 @@ mirror-to-gitlab:
   before_script:
     # Install global dependencies
     - apt-get update -y -qq -o=Dpkg::Use-Pty=0
-    - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync gettext-base
+    - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync gettext-base git git-lfs
 
     # Install ssh client
     - export SSH_PRIVATE_KEY="${GITHUB_SSH_PRIVATE_KEY}"
