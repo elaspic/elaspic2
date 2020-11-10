@@ -11,7 +11,7 @@ Predicting the effect of mutations on protein folding and protein-protein intera
 
 ### Web server
 
-ELASPIC2 has been integrated into the original ELASPIC web server, available at: <http://elaspic.kimlab.org>.
+`ELASPIC2` has been integrated into the original ELASPIC web server, available at: <http://elaspic.kimlab.org>.
 
 ### Python API
 
@@ -26,7 +26,7 @@ See other notebooks in the [`notebooks/`](tree/master/notebooks/) directory for 
 
 ### REST API
 
-ELASPIC2 is accessible through a REST API, documented at: <https://elaspic.uc.r.appspot.com/docs>.
+`ELASPIC2` is accessible through a REST API, documented at: <https://elaspic.uc.r.appspot.com/docs>.
 
 The following code snippet shows how the REST API can be accessed from within Python.
 
@@ -65,7 +65,7 @@ print(job_result)
 
 ### Command-line interface (CLI)
 
-You can then use the ELASPIC2 CLI as follows:
+You can then use the `ELASPIC2` CLI as follows:
 
 ```bash
 python -m elaspic2 \
@@ -75,17 +75,17 @@ python -m elaspic2 \
   --mutations G1A.G1C
 ```
 
-For examples of how to use the ELASPIC2 Python module, see the Google Colab notebooks above.
+For examples of how to use the `ELASPIC2` Python module, see the Google Colab notebooks above.
 
 ## Installation
 
 ### Docker
 
-Docker images that contain ELASPIC2 and all dependencies are available at: <https://gitlab.com/elaspic/elaspic2/container_registry>.
+Docker images that contain `ELASPIC2` and all dependencies are available at: <https://gitlab.com/elaspic/elaspic2/container_registry>.
 
 ### Conda-pack
 
-Conda-pack tarballs containing ELASPIC2 and all dependencies are available at: <http://conda-envs.proteinsolver.org/elaspic2/>.
+Conda-pack tarballs containing `ELASPIC2` and all dependencies are available at: <http://conda-envs.proteinsolver.org/elaspic2/>.
 
 Simply download and extract the tarball into a desired directory and run `conda-unpack` to unpack.
 
@@ -97,7 +97,7 @@ source ~/elaspic2/bin/activate
 conda-unpack
 ```
 
-Alternatively, ELASPIC2 is also downloaded using `conda` or `pip`.
+Alternatively, `ELASPIC2` is also downloaded using `conda` or `pip`.
 
 ### Conda
 
@@ -113,6 +113,6 @@ pip install elaspic2
 
 ## Data
 
-Data used to train and validate the ELASPIC2 models are available at <http://elaspic2.data.proteinsolver.org> and <http://protein-folding-energy.data.proteinsolver.org>.
+Data used to train and validate the `ELASPIC2` models are available at <http://elaspic2.data.proteinsolver.org> and <http://protein-folding-energy.data.proteinsolver.org>.
 
 See the [`protein-folding-energy`](https://gitlab.com/datapkg/protein-folding-energy) repository to see how these data were generated.
