@@ -28,7 +28,7 @@ See other notebooks in the [`notebooks/`](tree/master/notebooks/) directory for 
 
 `ELASPIC2` is accessible through a REST API, documented at: <https://elaspic.uc.r.appspot.com/docs>.
 
-The following code snippet shows how the REST API can be accessed from within Python.
+The following code snippet shows how the REST API can be used from within Python.
 
 ```python
 import json
@@ -65,7 +65,7 @@ print(job_result)
 
 ### Command-line interface (CLI)
 
-You can then use the `ELASPIC2` CLI as follows:
+Finally, `ELASPIC2` can be used through a command-line interface.
 
 ```bash
 python -m elaspic2 \
@@ -74,8 +74,6 @@ python -m elaspic2 \
   --ligand-sequence EYLGLDVPV \
   --mutations G1A.G1C
 ```
-
-For examples of how to use the `ELASPIC2` Python module, see the Google Colab notebooks above.
 
 ## Installation
 
@@ -90,9 +88,9 @@ Conda-pack tarballs containing `ELASPIC2` and all dependencies are available at:
 Simply download and extract the tarball into a desired directory and run `conda-unpack` to unpack.
 
 ```bash
-wget http://conda-envs.proteinsolver.org/elaspic2/elaspic2-master.tar.gz
+wget http://conda-envs.proteinsolver.org/elaspic2/elaspic2-latest.tar.gz
 mkdir ~/elaspic2
-tar -xzf elaspic2-master.tar.gz -C ~/elaspic2
+tar -xzf elaspic2-latest.tar.gz -C ~/elaspic2
 source ~/elaspic2/bin/activate
 conda-unpack
 ```
