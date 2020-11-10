@@ -313,6 +313,8 @@ build-image:
 
 mirror-to-gitlab:
   stage: custom
+  image:
+    name: ubuntu:20.04
   before_script:
     - export SSH_PRIVATE_KEY="${GITHUB_SSH_PRIVATE_KEY}"
     - export KNOWN_HOSTS="${GITHUB_KNOWN_HOSTS}"
