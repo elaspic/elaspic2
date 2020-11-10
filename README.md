@@ -11,11 +11,11 @@ Predicting the effect of mutations on protein folding and protein-protein intera
 
 ### Web server
 
-ELASPIC2 has been integrated into the original ELASPIC web server: <http://elaspic.kimlab.org>.
+ELASPIC2 has been integrated into the original ELASPIC web server, available at: <http://elaspic.kimlab.org>.
 
 ### Python API
 
-The following notebooks can be used to explore the basic functionality of `proteinsolver`.
+The following notebooks can be used to explore the basic functionality of `ELASPIC2`.
 
 | Notebook name             | Google Colab                                                                                                                                                                                               | Description                                                                                                    |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
