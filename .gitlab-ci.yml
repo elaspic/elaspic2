@@ -326,11 +326,7 @@ mirror-to-gitlab:
     - *install-ssh-client
   script:
     - git remote add mirror git@github.com:elaspic/elaspic2.git
-    - ls -al
-    - git status
     - git checkout master
-    - git branch
-    - git tag
     - git push mirror master --force
     - git push mirror master --tags --force
   only:
