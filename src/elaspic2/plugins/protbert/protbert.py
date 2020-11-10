@@ -51,7 +51,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
         cls.is_loaded = True
 
     @staticmethod
-    def _download_model_data(data_dir: Optional[Path]):
+    def _download_model_data(data_dir: Optional[Path] = None):
         def is_lfs_placeholder(file):
             with file.open("rb") as fin:
                 header = fin.read(7)
