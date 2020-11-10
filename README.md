@@ -99,14 +99,31 @@ Alternatively, `ELASPIC2` is also downloaded using `conda` or `pip`.
 
 ### Conda
 
+`ELASPIC2` can be installed using `conda`. However, the `torch-geometric` dependencies have to be installed separately.
+
 ```bash
-conda create -n elaspic2 -c ostrokach-forge -c conda-forge -c defaults elaspic2
+conda create -n elaspic2 -c pytorch -c ostrokach-forge -c conda-forge -c defaults elaspic2 "cudatoolkit=10.1"
+conda activate elaspic2
+pip install "torch-scatter==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
+pip install "torch-sparse==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
+pip install "torch-cluster==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
+pip install "torch-spline-conv==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
+pip install "torch-geometric==1.6.1"
 ```
 
 ### Python package index (PyPI)
 
+`ELASPIC2` can be installed using `pip`. However, the `torch` and `torch-geometric` dependencies have to be installed from external channels. Replace `cu101` with the desired CUDA version.
+
 ```bash
 pip install elaspic2
+pip install "torch==1.7.0+cu101" -f https://download.pytorch.org/whl/torch_stable.html
+pip install "torchvision==0.8.1+cu101" -f https://download.pytorch.org/whl/torch_stable.html
+pip install "torch-scatter==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
+pip install "torch-sparse==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
+pip install "torch-cluster==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
+pip install "torch-spline-conv==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
+pip install "torch-geometric==1.6.1"
 ```
 
 ## Data
