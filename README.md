@@ -13,6 +13,17 @@ Predicting the effect of mutations on protein folding and protein-protein intera
 
 ELASPIC2 has been integrated into the original ELASPIC web server: <http://elaspic.kimlab.org>.
 
+### Python API
+
+The following notebooks can be used to explore the basic functionality of `proteinsolver`.
+
+| Notebook name             | Google Colab                                                                                                                                                                                               | Description                                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `10_stability_demo.ipynb` | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/master/notebooks/10_stability_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a> | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein stability_.        |
+| `10_affinity_demo.ipynb`  | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/master/notebooks/10_affinity_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a>  | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein binding affinity_. |
+
+See other notebooks in the [`notebooks/`](tree/master/notebooks/) directory for more detailed information about how ELASPIC2 models are trained and validated.
+
 ### REST API
 
 ELASPIC2 is accessible through a REST API, documented at: <https://elaspic.uc.r.appspot.com/docs>.
@@ -52,22 +63,29 @@ requests.delete(job_request["web_url"]).raise_for_status()
 print(job_result)
 ```
 
-### Demo notebooks
-
-The following notebooks can be used to explore the basic functionality of `proteinsolver`.
-
-| Notebook name             | Google Colab                                                                                                                                                                                               | Description                                                                                                    |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `10_stability_demo.ipynb` | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/master/notebooks/10_stability_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a> | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein stability_.        |
-| `10_affinity_demo.ipynb`  | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/master/notebooks/10_affinity_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a>  | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein binding affinity_. |
-
-See other notebooks in the [`notebooks/`](tree/master/notebooks/) directory for more detailed information about how ELASPIC2 models are trained and validated.
-
 ### Command-line interface (CLI)
 
-ELASPIC2 can also be downloaded and used locally.
+You can then use the ELASPIC2 CLI as follows:
 
-The easiest way to install ELASPIC2 is to use one of tarballs available at: <http://conda-envs.proteinsolver.org/elaspic2/>.
+```bash
+python -m elaspic2 \
+  --protein-structure tests/structures/1MFG.pdb \
+  --protein-sequence GSMEIRVRVEKDPELGFSISGGVGGRGNPFRPDDDGIFVTRVQPEGPASKLLQPGDKIIQANGYSFINIEHGQAVSLLKTFQNTVELIIVREVSS \
+  --ligand-sequence EYLGLDVPV \
+  --mutations G1A.G1C
+```
+
+For examples of how to use the ELASPIC2 Python module, see the Google Colab notebooks above.
+
+## Installation
+
+### Docker
+
+Docker images that contain ELASPIC2 and all dependencies are available at: <https://gitlab.com/elaspic/elaspic2/container_registry>.
+
+### Conda-pack
+
+Conda-pack tarballs containing ELASPIC2 and all dependencies are available at: <http://conda-envs.proteinsolver.org/elaspic2/>.
 
 Simply download and extract the tarball into a desired directory and run `conda-unpack` to unpack.
 
@@ -81,17 +99,17 @@ conda-unpack
 
 Alternatively, ELASPIC2 is also downloaded using `conda` or `pip`.
 
-You can then use the ELASPIC2 CLI as follows:
+### Conda
 
 ```bash
-python -m elaspic2 \
-  --protein-structure tests/structures/1MFG.pdb \
-  --protein-sequence GSMEIRVRVEKDPELGFSISGGVGGRGNPFRPDDDGIFVTRVQPEGPASKLLQPGDKIIQANGYSFINIEHGQAVSLLKTFQNTVELIIVREVSS \
-  --ligand-sequence EYLGLDVPV \
-  --mutations G1A.G1C
+conda create -n elaspic2 -c ostrokach-forge -c conda-forge -c defaults elaspic2
 ```
 
-For examples of how to use the ELASPIC2 Python module, see the Google CoLab notebooks above.
+### Python package index (PyPI)
+
+```bash
+pip install elaspic2
+```
 
 ## Data
 
