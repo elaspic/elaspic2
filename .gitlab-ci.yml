@@ -23,7 +23,7 @@ variables:
     variables:
       - $UPDATE_PAGES
       - $BUILD_IMAGE_WITH_TAG
-      - $MIRROR_TO_GITLAB
+      - $MIRROR_TO_GITHUB
 
 .configure-conda:
   # Set conda envs and pkgs dirs
@@ -265,6 +265,12 @@ trigger-custom-pipelines:
       --form ref=${CI_COMMIT_TAG}
       --form "variables[BUILD_IMAGE_WITH_TAG]=${CI_JOB_TOKEN}"
       https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline
+    # Mirror to GitHub
+    - curl --request POST
+      --form token="${CI_JOB_TOKEN}"
+      --form ref=${CI_COMMIT_TAG}
+      --form "variables[MIRROR_TO_GITLAB]=true"
+      https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline
   only:
     - tags
 
@@ -311,7 +317,7 @@ build-image:
     variables:
       - $BUILD_IMAGE_WITH_TAG
 
-mirror-to-gitlab:
+mirror-to-github:
   stage: custom
   image:
     name: ubuntu:20.04
@@ -331,4 +337,4 @@ mirror-to-gitlab:
     - git push mirror master --tags --force
   only:
     variables:
-      - $MIRROR_TO_GITLAB
+      - $MIRROR_TO_GITHUB
