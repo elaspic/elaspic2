@@ -316,6 +316,11 @@ mirror-to-gitlab:
   image:
     name: ubuntu:20.04
   before_script:
+    # Install global dependencies
+    - apt-get update -y -qq -o=Dpkg::Use-Pty=0
+    - apt-get install -y -qq -o=Dpkg::Use-Pty=0 curl rsync gettext-base
+
+    # Install ssh client
     - export SSH_PRIVATE_KEY="${GITHUB_SSH_PRIVATE_KEY}"
     - export KNOWN_HOSTS="${GITHUB_KNOWN_HOSTS}"
     - *install-ssh-client
