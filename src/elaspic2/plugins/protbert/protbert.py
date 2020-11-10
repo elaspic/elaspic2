@@ -51,11 +51,17 @@ class ProtBert(SequenceTool, MutationAnalyzer):
         cls.is_loaded = True
 
     @staticmethod
-    def _download_model_data(data_dir: Path):
+    def _download_model_data(data_dir: Optional[Path]):
         def is_lfs_placeholder(file):
             with file.open("rb") as fin:
                 header = fin.read(7)
             return header == b"version"
+
+        # This helps when downloading module data while building the Docker image
+        if data_dir is None:
+            data_dir = Path(elaspic2.plugins.protbert.data.__path__[0], "prot_bert_bfd").resolve(
+                strict=True
+            )
 
         tag = f"v{elaspic2.__version__}"
         url = (

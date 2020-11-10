@@ -18,8 +18,7 @@ RUN mkdir -p /opt/docker/bin /opt/conda \
   && curl -sS https://conda-envs.proteinsolver.org/${ENV_NAME}/${ENV_NAME}-${ENV_VERSION}.tar.gz | tar -xz -C /opt/conda/ \
   && . /opt/conda/bin/activate \
   && conda-unpack \
-  && python -c "from elaspic2.plugins.protbert import ProtBert; ProtBert.load_model()" \
-  && python -c "from elaspic2.plugins.proteinsolver import ProteinSolver; ProteinSolver.load_model()" \
+  && python -c "from elaspic2.plugins.protbert import ProtBert; ProtBert._download_model_data()" \
   && chgrp -R lucky /opt/conda \
   && chmod -R g=u /opt/conda
 
