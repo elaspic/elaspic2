@@ -43,6 +43,7 @@ variables:
         - https://${PYROSETTA_CONDA_LOGIN}@conda.graylab.jhu.edu
         - omnia
       EOF
+    - conda install -yq mamba
 
 # === Lint ===
 
@@ -53,7 +54,7 @@ lint:
   before_script:
     - *configure-conda
   script:
-    - conda create -n lint -q "python=${PYTHON_VERSION}" isort toml flake8 mypy black
+    - mamba create -n lint -q "python=${PYTHON_VERSION}" isort toml flake8 mypy black
     - source activate lint
     - python -m isort -p elaspic2 -c .
     - python -m flake8
@@ -71,10 +72,10 @@ build:
   before_script:
     - *configure-conda
   script:
-    - conda install -yq conda conda-build conda-verify conda-forge-pinning
+    - mamba install -yq conda conda-build conda-verify conda-forge-pinning
     - cd "${CI_PROJECT_DIR}/.gitlab/conda"
     - >
-      conda build .
+      mamba build .
       --variant-config-files /opt/conda/conda_build_config.yaml
       --variants "{python: [$PYTHON_VERSION], numpy: [1.16], python_impl: [cpython]}"
       --output-folder "$CI_PROJECT_DIR/conda-bld"
@@ -121,13 +122,13 @@ test:
     # Create conda environment
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
     - cat .gitlab/conda-env/environment-subst.yml
-    - conda env create -q -n ${CI_PROJECT_NAME} -f .gitlab/conda-env/environment-subst.yml
+    - mamba env create -q -n ${CI_PROJECT_NAME} -f .gitlab/conda-env/environment-subst.yml
 
     # Install pypi packages
-    - conda activate ${CI_PROJECT_NAME}
-    - conda install -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
+    - mamba activate ${CI_PROJECT_NAME}
+    - mamba install -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
     - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
-    - conda list -n ${CI_PROJECT_NAME}
+    - mamba list -n ${CI_PROJECT_NAME}
 
     # Tests
     - export SKIP_SLOW_TESTS=true
@@ -161,7 +162,7 @@ test:
       fi
 
     # Install optional dependencies
-    - conda install "modeller=9.25" "pyrosetta=2020.37+release.3ba1aaa" "rosetta-ddg=2020.37"
+    - mamba install "modeller=9.25" "pyrosetta=2020.37+release.3ba1aaa" "rosetta-ddg=2020.37"
 
     # Test optional plugins
     - python -m pytest
@@ -192,8 +193,7 @@ docs:
     - *configure-conda
   script:
     # Create conda environment for testing
-    - conda update -yq conda
-    - conda create -n test -q -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
+    - mamba create -n test -q -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
       "python=${PYTHON_VERSION}" ${CI_PROJECT_NAME} nbconvert ipython ipykernel pandoc || true
     - source activate test
     - pip install -q sphinx sphinx_rtd_theme msmb_theme recommonmark sphinx-markdown-tables
@@ -221,8 +221,6 @@ deploy:
   stage: deploy
   extends:
     - .skip-custom-pipelines
-  before_script:
-    - *configure-conda
   script:
     - anaconda -t $ANACONDA_TOKEN upload $CI_PROJECT_DIR/conda-bld/*/*.tar.bz2 -u ostrokach-forge --no-progress --force
   only:
@@ -234,8 +232,6 @@ deploy-pypi:
   stage: deploy
   extends:
     - .skip-custom-pipelines
-  before_script:
-    - *configure-conda
   script:
     - python -m pip install -q twine wheel
     - python setup.py sdist bdist_wheel
