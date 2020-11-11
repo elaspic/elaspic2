@@ -13,7 +13,7 @@ def read_requirements():
 
 setup(
     name="elaspic2",
-    version="0.1.2",
+    version="0.1.3",
     description=(
         "Predicting the effect of mutations on protein folding and protein-protein interaction."
     ),
