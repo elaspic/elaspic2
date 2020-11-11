@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-def read_md(file):
+def read_file(file):
     with open(file) as fin:
         return fin.read()
 
@@ -17,7 +17,8 @@ setup(
     description=(
         "Predicting the effect of mutations on protein folding and protein-protein interaction."
     ),
-    long_description=read_md("README.md"),
+    long_description=read_file("README.md"),
+    long_description_content_type="text/markdown",
     author="Alexey Strokach",
     author_email="alex.strokach@utoronto.ca",
     url="https://gitlab.com/elaspic/elaspic2",
