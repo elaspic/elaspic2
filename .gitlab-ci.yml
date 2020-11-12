@@ -54,7 +54,7 @@ lint:
   before_script:
     - *configure-conda
   script:
-    - mamba create -n lint -q "python=${PYTHON_VERSION}" isort toml flake8 mypy black
+    - mamba create -n lint -yq "python=${PYTHON_VERSION}" isort toml flake8 mypy black
     - source activate lint
     - python -m isort -p elaspic2 -c .
     - python -m flake8
@@ -116,7 +116,7 @@ test:
     - sh miniconda.sh -b -p /opt/conda
     - source /opt/conda/etc/profile.d/conda.sh
     - conda activate root
-    - conda install -n root -c conda-forge -y -q mamba conda-pack
+    - conda install -n root -c conda-forge -yq mamba conda-pack
     - *configure-conda
   script:
     # Create conda environment
@@ -125,7 +125,7 @@ test:
     - mamba env create -q -n ${CI_PROJECT_NAME} -f .gitlab/conda-env/environment-subst.yml
 
     # Install pypi packages
-    - mamba activate ${CI_PROJECT_NAME}
+    - conda activate ${CI_PROJECT_NAME}
     - mamba install -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
     - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
     - mamba list -n ${CI_PROJECT_NAME}
@@ -193,7 +193,7 @@ docs:
     - *configure-conda
   script:
     # Create conda environment for testing
-    - mamba create -n test -q -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
+    - mamba create -n test -yq -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
       "python=${PYTHON_VERSION}" ${CI_PROJECT_NAME} nbconvert ipython ipykernel pandoc || true
     - source activate test
     - pip install -q sphinx sphinx_rtd_theme msmb_theme recommonmark sphinx-markdown-tables
