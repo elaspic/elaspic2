@@ -127,7 +127,7 @@ test:
 
     # Install pypi packages
     - conda activate ${CI_PROJECT_NAME}
-    - mamba install -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
+    - mamba install -c file://${CI_PROJECT_DIR}/conda-bld -yq ${CI_PROJECT_NAME}
     - pip install --no-use-pep517 -U -r .gitlab/conda-env/requirements.txt
     - mamba list -n ${CI_PROJECT_NAME}
 
