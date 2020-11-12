@@ -265,7 +265,7 @@ trigger-custom-pipelines:
     - curl --request POST
       --form token="${CI_JOB_TOKEN}"
       --form ref=${CI_COMMIT_TAG}
-      --form "variables[MIRROR_TO_GITLAB]=true"
+      --form "variables[MIRROR_TO_GITHUB]=true"
       https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/trigger/pipeline
   only:
     - tags
