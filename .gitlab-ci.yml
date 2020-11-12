@@ -76,6 +76,7 @@ build:
     - cd "${CI_PROJECT_DIR}/.gitlab/conda"
     - >
       mamba build .
+      --no-test
       --variant-config-files /opt/conda/conda_build_config.yaml
       --variants "{python: [$PYTHON_VERSION], numpy: [1.16], python_impl: [cpython]}"
       --output-folder "$CI_PROJECT_DIR/conda-bld"
