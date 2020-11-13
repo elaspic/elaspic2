@@ -116,9 +116,9 @@ test:
     - md5sum miniconda.sh | grep d63adf39f2c220950a063e0529d4ff74
     - sh miniconda.sh -b -p /opt/conda
     - source /opt/conda/etc/profile.d/conda.sh
-    - conda activate root
-    - conda install -n root -c conda-forge -yq mamba conda-pack
     - *configure-conda
+    - conda activate root
+    - conda install -n root -c conda-forge -yq conda-pack
   script:
     # Create conda environment
     - envsubst < .gitlab/conda-env/environment.yml > .gitlab/conda-env/environment-subst.yml
