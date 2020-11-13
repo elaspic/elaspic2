@@ -133,3 +133,13 @@ pip install "torch-geometric==1.6.1"
 Data used to train and validate the `ELASPIC2` models are available at <http://elaspic2.data.proteinsolver.org> and <http://protein-folding-energy.data.proteinsolver.org>.
 
 See the [`protein-folding-energy`](https://gitlab.com/datapkg/protein-folding-energy) repository to see how these data were generated.
+
+## Acknowledgements
+
+<div align="center">
+<img src="docs/_static/acknowledgements.svg" width="45%" />
+</div>
+
+## References
+
+- Alexey Strokach, Tian Yu Lu, Philip M. Kim. _ELASPIC2 (EL2): Combining contextualized language models and graph neural networks to predict effects of mutations_.
