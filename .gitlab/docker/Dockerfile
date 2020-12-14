@@ -27,6 +27,10 @@ RUN mkdir -p /opt/docker/bin /opt/conda \
 #   && conda activate \
 #   && conda install -yq -c conda-forge su-exec
 
+# Give sudo permission for conda user to run yum (user creation is postponed
+# to the entrypoint, so we can create a user with the same id as the host)
+RUN echo 'conda ALL=NOPASSWD: /usr/local/bin/apt, /usr/bin/apt-get, /usr/bin/aptitude' >> /etc/sudoers
+
 COPY entrypoint /opt/docker/bin/entrypoint
 
 # Ensure that all containers start with tini and the user selected process.
