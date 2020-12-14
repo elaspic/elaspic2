@@ -3,7 +3,7 @@
 [![conda](https://img.shields.io/conda/dn/ostrokach-forge/elaspic2.svg)](https://anaconda.org/ostrokach-forge/elaspic2/)
 [![docs](https://img.shields.io/badge/docs-v0.1.3-blue.svg)](https://elaspic.gitlab.io/elaspic2/v0.1.3/)
 [![pipeline status](https://gitlab.com/elaspic/elaspic2/badges/v0.1.3/pipeline.svg)](https://gitlab.com/elaspic/elaspic2/commits/v0.1.3/)
-[![coverage report](https://gitlab.com/elaspic/elaspic2/badges/v0.1.3/coverage.svg)](https://elaspic.gitlab.io/elaspic2/v0.1.3/htmlcov/)
+[![coverage report](https://gitlab.com/elaspic/elaspic2/badges/v0.1.3/coverage.svg?job=docs)](https://elaspic.gitlab.io/elaspic2/v0.1.3/htmlcov/)
 
 Predicting the effect of mutations on protein folding and protein-protein interaction.
 
