@@ -23,7 +23,7 @@ dependencies:
   # - pyrosetta =2020.37+release.3ba1aaa
   # - rosetta-ddg =2020.37
   # Machine learning
-  - anaconda::cudatoolkit =10.1
+  - cudatoolkit =10.1
   - lightgbm >=3.0
   - proteinsolver >=0.1.25
   - pytorch::pytorch =1.7.0
