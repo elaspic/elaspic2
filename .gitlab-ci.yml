@@ -163,7 +163,7 @@ test:
       fi
 
     # Install optional dependencies (try conda, mamba was having difficulties...)
-    - conda install "modeller=9.25" "pyrosetta=2020.37+release.3ba1aaa" "rosetta-ddg=2020.37"
+    - mamba install "modeller=9.25" "pyrosetta=2020.37+release.3ba1aaa" "rosetta-ddg=2020.37" "anaconda::cudatoolkit=10.1"
 
     # Test optional plugins
     - python -m pytest
