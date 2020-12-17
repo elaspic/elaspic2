@@ -31,7 +31,11 @@ def run(
     Returns:
         Stability (and affinity) predictions for every mutation.
     """
-    mutation_list = mutations.replace(".", ",").split(",")
+    if isinstance(mutations, (list, tuple)):
+        # If the input string has commas, fire automatically interprets it as a list
+        mutation_list = list(mutations)
+    else:
+        mutation_list = list(mutations.split("."))
 
     model = el2.ELASPIC2(device=torch.device(device))
 
