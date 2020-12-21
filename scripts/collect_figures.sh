@@ -10,4 +10,4 @@ rsync -av \
 
 SED_PATTERN='s/<svg preserveAspectRatio="none"/CRAZYSTRINGNOTINSVG/g; s/<svg/<svg preserveAspectRatio="none"/g; s/CRAZYSTRINGNOTINSVG/<svg preserveAspectRatio="none"/g'
 
-find ./docs/images/ -name '*.svg' | xargs -i{} sed -i -e "${SED_PATTERN}" {}
+# find ./docs/images/ -name '*.svg' | xargs -i{} sed -i -e "${SED_PATTERN}" {}
