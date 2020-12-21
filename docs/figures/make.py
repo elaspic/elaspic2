@@ -29,6 +29,7 @@ def print_figures():
         "figure-1.html",
         "figure-2.html",
         "figure-s1.html",
+        "figure-s2.html",
     ]
     for file in files:
         file_path = Path(__file__).with_name(file).resolve(strict=True)
