@@ -65,25 +65,28 @@ def setup(app):
 # extensions coming with Sphinx (named "sphinx.ext.*") or your custom ones.
 extensions = [
     "nbsphinx",
+    "recommonmark",
+    "sphinx_markdown_tables",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
+    "sphinx.ext.coverage",
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
-    "sphinx.ext.todo",
-    "sphinx.ext.coverage",
     "sphinx.ext.mathjax",
-    "sphinx.ext.viewcode",
     "sphinx.ext.napoleon",
-    "sphinx_markdown_tables",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
 # The suffix of source filenames.
-source_suffix = [".rst", ".md"]
-
-source_parsers = {".md": CommonMarkParser}
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
+}
 
 # The encoding of source files.
 # source_encoding = "utf-8-sig"
