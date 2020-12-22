@@ -1,9 +1,9 @@
 # ELASPIC2
 
 [![conda](https://img.shields.io/conda/dn/ostrokach-forge/elaspic2.svg)](https://anaconda.org/ostrokach-forge/elaspic2/)
-[![docs](https://img.shields.io/badge/docs-v0.1.4-blue.svg)](https://elaspic.gitlab.io/elaspic2/v0.1.4/)
-[![pipeline status](https://gitlab.com/elaspic/elaspic2/badges/v0.1.4/pipeline.svg)](https://gitlab.com/elaspic/elaspic2/commits/v0.1.4/)
-[![coverage report](https://gitlab.com/elaspic/elaspic2/badges/v0.1.4/coverage.svg?job=docs)](https://elaspic.gitlab.io/elaspic2/v0.1.4/htmlcov/)
+[![docs](https://img.shields.io/badge/docs-v0.1.5-blue.svg)](https://elaspic.gitlab.io/elaspic2/v0.1.5/)
+[![pipeline status](https://gitlab.com/elaspic/elaspic2/badges/v0.1.5/pipeline.svg)](https://gitlab.com/elaspic/elaspic2/commits/v0.1.5/)
+[![coverage report](https://gitlab.com/elaspic/elaspic2/badges/v0.1.5/coverage.svg?job=docs)](https://elaspic.gitlab.io/elaspic2/v0.1.5/htmlcov/)
 
 Predicting the effect of mutations on protein folding and protein-protein interaction.
 
@@ -19,8 +19,8 @@ The following notebooks can be used to explore the basic functionality of `ELASP
 
 | Notebook name             | Google Colab                                                                                                                                                                                               | Description                                                                                                    |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `10_stability_demo.ipynb` | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/v0.1.4/notebooks/10_stability_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a> | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein stability_.        |
-| `10_affinity_demo.ipynb`  | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/v0.1.4/notebooks/10_affinity_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a>  | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein binding affinity_. |
+| `10_stability_demo.ipynb` | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/v0.1.5/notebooks/10_stability_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a> | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein stability_.        |
+| `10_affinity_demo.ipynb`  | <a href="https://colab.research.google.com/github/elaspic/elaspic2/blob/v0.1.5/notebooks/10_affinity_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="200px" /></a>  | Example notebook showing how to use ELASPIC2 to predict the effect of mutations on _protein binding affinity_. |
 
 See other notebooks in the [`notebooks/`](https://gitlab.com/elaspic/elaspic2/-/tree/master/notebooks) directory for more detailed information about how ELASPIC2 models are trained and validated.
 
