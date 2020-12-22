@@ -328,6 +328,7 @@ mirror-to-github:
     - export KNOWN_HOSTS="${GITHUB_KNOWN_HOSTS}"
     - *install-ssh-client
   script:
+    - git fetch --all
     - git remote add mirror git@github.com:elaspic/elaspic2.git
     - git checkout master
     - git push mirror master --force
