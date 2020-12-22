@@ -156,7 +156,7 @@ html_theme = "msmb_theme"
 html_theme_options = {"collapse_navigation": False, "display_version": True}
 
 # Context is a dictionary passed to the templating engine.
-html_context = {"versions_json_url": "https://elaspic2.gitlab.io/versions.json"}
+html_context = {"versions_json_url": "https://elaspic.gitlab.io/elaspic2/versions.json"}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = [
