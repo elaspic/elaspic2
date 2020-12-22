@@ -197,7 +197,7 @@ docs:
     - mamba create -n test -yq -c file://${CI_PROJECT_DIR}/conda-bld ${CI_PROJECT_NAME}
       "python=${PYTHON_VERSION}" ${CI_PROJECT_NAME} nbconvert ipython ipykernel pandoc || true
     - source activate test
-    - pip install -q 'sphinx>=4' sphinx_rtd_theme msmb_theme nbsphinx coverage
+    - pip install -q 'sphinx>=3.4' sphinx_rtd_theme msmb_theme nbsphinx coverage
       'recommonmark>=0.5' sphinx-markdown-tables
     # Build docs
     - sphinx-build ${CI_PROJECT_DIR}/docs public
