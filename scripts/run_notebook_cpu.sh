@@ -1,6 +1,6 @@
 #!/bin/bash
 # #SBATCH --array=1-1
-#SBATCH --time=72:00:00
+#SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 #SBATCH --mem=120G
@@ -18,12 +18,16 @@ unset XDG_RUNTIME_DIR
 echo ${NOTEBOOK_PATH}
 
 mkdir ${SLURM_TMPDIR}/env
-tar -xzf ~/datapkg-data-dir/conda-envs/default/default-v43.tar.gz -C ${SLURM_TMPDIR}/env
+tar -xzf ~/datapkg-data-dir/conda-envs/default/default-v45.tar.gz -C ${SLURM_TMPDIR}/env
+chmod ugo+rwX -R ${SLURM_TMPDIR}/env/
 
 source ${SLURM_TMPDIR}/env/etc/profile.d/conda.sh
+
 source ${SLURM_TMPDIR}/env/bin/activate
-chmod ugo+rwX ${SLURM_TMPDIR}/env/ -R
 conda-unpack
+source deactivate
+
+source ${SLURM_TMPDIR}/env/bin/activate
 
 sed -i "s|XXXX|${KEY_MODELLER}|" ${SLURM_TMPDIR}/env/lib/modeller-9.25/modlib/modeller/config.py
 
