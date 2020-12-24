@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProtBert(SequenceTool, MutationAnalyzer):
+    transformers_major_version: int = None  # type: ignore
     tokenizer = None
     model = None
     model_lm = None
@@ -28,6 +29,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
 
     @classmethod
     def load_model(cls, model_name="prot_bert_bfd", device=torch.device("cpu")) -> None:
+        import transformers
         from transformers import BertForMaskedLM, BertModel, BertTokenizer, logging
 
         @contextmanager
@@ -45,6 +47,7 @@ class ProtBert(SequenceTool, MutationAnalyzer):
             with hide_warning():
                 cls.model_lm = BertForMaskedLM.from_pretrained(data_dir.as_posix())
 
+        cls.transformers_major_version = int(transformers.__version__.split(".")[0])
         cls.model = cls.model.eval().to(device)
         cls.model_lm = cls.model_lm.eval().to(device)
         cls.device = device
@@ -119,12 +122,13 @@ class ProtBert(SequenceTool, MutationAnalyzer):
                 assert device.type == "cuda"
                 return 0
 
+        pipeline_kwargs = {"top_k": 30} if cls.transformers_major_version >= 4 else {"topk": 30}
         unmasker = pipeline(
             "fill-mask",
             model=cls.model_lm,
             tokenizer=cls.tokenizer,
-            topk=30,
             device=guess_transformer_device(cls.device),
+            **pipeline_kwargs,
         )
 
         aa_list = list(data.sequence)
@@ -151,11 +155,15 @@ class ProtBert(SequenceTool, MutationAnalyzer):
         encoded_input_wt = cls.tokenizer(" ".join(list(aa_wt_list)), return_tensors="pt").to(
             cls.device
         )
+        if cls.transformers_major_version >= 4:
+            encoded_input_wt["return_dict"] = False
         output_wt, output_cls_wt = cls.model(**encoded_input_wt)
 
         encoded_input_mut = cls.tokenizer(" ".join(list(aa_mut_list)), return_tensors="pt").to(
             cls.device
         )
+        if cls.transformers_major_version >= 4:
+            encoded_input_mut["return_dict"] = False
         output_mut, output_cls_mut = cls.model(**encoded_input_mut)
 
         return {
