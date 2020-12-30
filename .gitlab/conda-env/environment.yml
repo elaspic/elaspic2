@@ -17,7 +17,7 @@ dependencies:
   - kimlab::kmbio >=2.1
   - kimlab::kmtools >=0.2.8
   - mdtraj >=1.9
-  - scikit-learn >=0.23
+  - scikit-learn =0.23.2
   # - salilab::modeller =9.25
   # Rosetta
   # - pyrosetta =2020.37+release.3ba1aaa
