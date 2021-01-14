@@ -142,4 +142,4 @@ See the [`protein-folding-energy`](https://gitlab.com/datapkg/protein-folding-en
 
 ## References
 
-- Alexey Strokach, Tian Yu Lu, Philip M. Kim. _ELASPIC2 (EL2): Combining contextualized language models and graph neural networks to predict effects of mutations_.
+- Alexey Strokach, Tian Yu Lu, Philip M. Kim. _ELASPIC2 (EL2): Combining contextualized language models and graph neural networks to predict effects of mutations_. Journal of Molecular Biology. <https://doi.org/10.1016/j.jmb.2021.166810>.
