@@ -1,7 +1,8 @@
 # ELASPIC2
 
-[![conda](https://img.shields.io/conda/dn/ostrokach-forge/elaspic2.svg)](https://anaconda.org/ostrokach-forge/elaspic2/)
-[![docs](https://img.shields.io/badge/docs-v0.1.7-blue.svg)](https://elaspic.gitlab.io/elaspic2/v0.1.7/)
+[![gitlab](https://img.shields.io/badge/GitLab-main-orange?logo=gitlab)](https://gitlab.com/elaspic/elaspic2)
+[![docs](https://img.shields.io/badge/docs-v0.1.7-blue.svg?logo=gitbook)](https://elaspic.gitlab.io/elaspic2/v0.1.7/)
+[![conda](https://img.shields.io/conda/dn/ostrokach-forge/elaspic2.svg?logo=conda-forge)](https://anaconda.org/ostrokach-forge/elaspic2/)
 [![pipeline status](https://gitlab.com/elaspic/elaspic2/badges/v0.1.7/pipeline.svg)](https://gitlab.com/elaspic/elaspic2/commits/v0.1.7/)
 [![coverage report](https://gitlab.com/elaspic/elaspic2/badges/v0.1.7/coverage.svg?job=docs)](https://elaspic.gitlab.io/elaspic2/v0.1.7/htmlcov/)
 
