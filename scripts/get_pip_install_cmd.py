@@ -57,4 +57,8 @@ with ROOT_DIR.joinpath("notebooks", "10_affinity_demo.ipynb").open("rt") as fin:
     notebook_text = clean_notebook_text(fin.read())
 assert command in notebook_text
 
+with ROOT_DIR.joinpath("notebooks", "10_multiresidue_demo.ipynb").open("rt") as fin:
+    notebook_text = clean_notebook_text(fin.read())
+assert command in notebook_text
+
 print(command)
