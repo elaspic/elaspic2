@@ -116,7 +116,7 @@ pip install "torch-geometric==1.6.1"
 
 `ELASPIC2` can be installed using `pip`. However, the `torch` and `torch-geometric` dependencies have to be installed from external channels.
 
-Replace `cu101` with the desired CUDA version.
+Make sure that `git lfs` is installed on your system, and run the commands below, replace `cu101` below with the desired CUDA version.
 
 ```bash
 pip install "torch==1.8.1";
