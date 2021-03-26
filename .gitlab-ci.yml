@@ -24,6 +24,7 @@ variables:
       - $UPDATE_PAGES
       - $BUILD_IMAGE_WITH_TAG
       - $MIRROR_TO_GITHUB
+      - $TEST_PIP_INSTALL
 
 .configure-conda:
   # Set conda envs and pkgs dirs
@@ -336,3 +337,15 @@ mirror-to-github:
   only:
     variables:
       - $MIRROR_TO_GITHUB
+
+test-pip-install:
+  stage: custom
+  image:
+    name: python:latest
+  script:
+    - PIP_INSTALL_CMD=$(./scripts/get_pip_install_cmd.py)
+    - ${PIP_INSTALL_CMD}
+    - elaspic2 --help
+  only:
+    variables:
+      - $TEST_PIP_INSTALL
