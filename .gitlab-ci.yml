@@ -344,7 +344,7 @@ test-pip-install:
     name: python:latest
   script:
     - PIP_INSTALL_CMD=$(./scripts/get_pip_install_cmd.py)
-    - ${PIP_INSTALL_CMD}
+    - bash -c ${PIP_INSTALL_CMD}
     - elaspic2 --help
   only:
     variables:
