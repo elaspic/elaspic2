@@ -341,7 +341,7 @@ mirror-to-github:
 test-pip-install:
   stage: custom
   image:
-    name: python:latest
+    name: python:3.8-buster
   script:
     - PIP_INSTALL_CMD=$(./scripts/get_pip_install_cmd.py)
     - eval "pip install 'torch==1.8.1'; ${PIP_INSTALL_CMD}"
