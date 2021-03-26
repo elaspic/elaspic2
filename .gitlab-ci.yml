@@ -344,7 +344,7 @@ test-pip-install:
     name: python:latest
   script:
     - PIP_INSTALL_CMD=$(./scripts/get_pip_install_cmd.py)
-    - bash -c "pip install "torch==1.8.1"; ${PIP_INSTALL_CMD}"
+    - eval "pip install 'torch==1.8.1'; ${PIP_INSTALL_CMD}"
     - elaspic2 --help
   only:
     variables:
