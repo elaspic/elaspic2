@@ -119,14 +119,17 @@ pip install "torch-geometric==1.6.1"
 Replace `cu101` with the desired CUDA version.
 
 ```bash
-pip install elaspic2
-pip install "torch==1.7.0+cu101" -f https://download.pytorch.org/whl/torch_stable.html
-pip install "torchvision==0.8.1+cu101" -f https://download.pytorch.org/whl/torch_stable.html
-pip install "torch-scatter==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
-pip install "torch-sparse==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
-pip install "torch-cluster==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
-pip install "torch-spline-conv==latest+cu101" -f https://pytorch-geometric.com/whl/torch-1.7.0.html
-pip install "torch-geometric==1.6.1"
+pip install -f https://pytorch-geometric.com/whl/torch-1.8.0+cu101.html --default-timeout=600 \
+    "transformers==3.3.1" \
+    "torch-scatter==2.0.6" \
+    "torch-sparse==0.6.9" \
+    "torch-cluster==1.5.9" \
+    "torch-spline-conv==1.2.1" \
+    "torch-geometric==1.6.1" \
+    "https://gitlab.com/kimlab/kmbio/-/archive/v2.1.0/kmbio-v2.1.0.zip" \
+    "https://gitlab.com/kimlab/kmtools/-/archive/v0.2.8/kmtools-v0.2.8.zip" \
+    "https://gitlab.com/ostrokach/proteinsolver/-/archive/v0.1.25/proteinsolver-v0.1.25.zip" \
+    "git+https://gitlab.com/elaspic/elaspic2.git"
 ```
 
 ## Data
