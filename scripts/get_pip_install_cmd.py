@@ -23,6 +23,11 @@ def clean_notebook_text(text):
     return text.strip()
 
 
+def command_to_colab(command):
+    command = command.replace('"torch==1.8.1" ', "")
+    return command
+
+
 def get_match(text, command):
     idx = text.index("https://pytorch-geometric.com/whl/torch-1.8.0+cu101.html")
     match = text[idx - 15 : idx + len(command) - 15]
@@ -31,6 +36,7 @@ def get_match(text, command):
 
 command = r"""
 pip install -f https://pytorch-geometric.com/whl/torch-1.8.0+cu101.html --default-timeout=600 \
+    "torch==1.8.1" \
     "transformers==3.3.1" \
     "torch-scatter==2.0.6" \
     "torch-sparse==0.6.9" \
@@ -50,10 +56,16 @@ assert command in readme_text, (command, get_match(readme_text, command))
 
 with ROOT_DIR.joinpath("notebooks", "10_stability_demo.ipynb").open("rt") as fin:
     notebook_text = clean_notebook_text(fin.read())
-assert command in notebook_text, (command, get_match(notebook_text, command))
+assert command_to_colab(command) in notebook_text, (
+    command_to_colab(command),
+    get_match(notebook_text, command_to_colab(command)),
+)
 
 with ROOT_DIR.joinpath("notebooks", "10_affinity_demo.ipynb").open("rt") as fin:
     notebook_text = clean_notebook_text(fin.read())
-assert command in notebook_text, (command, get_match(notebook_text, command))
+assert command_to_colab(command) in notebook_text, (
+    command_to_colab(command),
+    get_match(notebook_text, command_to_colab(command)),
+)
 
 print(command)

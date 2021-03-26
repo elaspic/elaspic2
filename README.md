@@ -120,6 +120,7 @@ Replace `cu101` with the desired CUDA version.
 
 ```bash
 pip install -f https://pytorch-geometric.com/whl/torch-1.8.0+cu101.html --default-timeout=600 \
+    "torch==1.8.1" \
     "transformers==3.3.1" \
     "torch-scatter==2.0.6" \
     "torch-sparse==0.6.9" \
