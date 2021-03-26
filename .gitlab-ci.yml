@@ -342,10 +342,25 @@ test-pip-install:
   stage: custom
   image:
     name: python:3.8-buster
+  variables:
+    PROTEIN_STRUCTURE_URL: "https://files.rcsb.org/download/1MFG.pdb"
+    PROTEIN_SEQUENCE: "GSMEIRVRVEKDPELGFSISGGVGGRGNPFRPDDDGIFVTRVQPEGPASKLLQPGDKIIQANGYSFINIEHGQAVSLLKTFQNTVELIIVREVSS"
+    MUTATIONS: "G1A.G1C"
+    LIGAND_SEQUENCE: "EYLGLDVPV"
   script:
+    # Install
     - PIP_INSTALL_CMD=$(./scripts/get_pip_install_cmd.py)
-    - eval "pip install 'torch==1.8.1'; ${PIP_INSTALL_CMD}"
+    - eval "${PIP_INSTALL_CMD}"
     - python -m elaspic2 --help
+    # Evaluate a single mutation
+    - export PROTEIN_STRUCTURE="$(basename ${PROTEIN_STRUCTURE_URL})"
+    - wget --no-verbose "${PROTEIN_STRUCTURE_URL}" -O "${PROTEIN_STRUCTURE}" || true
+    - >
+      python -m elaspic2 
+      --protein-structure="${PROTEIN_STRUCTURE}"
+      --protein-sequence="${PROTEIN_SEQUENCE}"
+      --mutations="${MUTATIONS}"
+      --ligand-sequence="${LIGAND_SEQUENCE}"
   only:
     variables:
       - $TEST_PIP_INSTALL
