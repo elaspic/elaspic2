@@ -7,3 +7,12 @@ nglview>=2.7,<2.8
 paramiko>=2.7,<2.8
 tenacity>=6.2,<6.3
 tqdm>=4.50,<4.55
+lightgbm>=3.2.0,<4.0
+# For kmtools:
+cloudpickle
+psutil
+pyarrow
+pytest
+retrying
+sqlalchemy
+tables
