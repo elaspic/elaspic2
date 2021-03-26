@@ -24,7 +24,7 @@ def clean_notebook_text(text):
 
 
 def command_to_colab(command):
-    command = command.replace('"torch==1.8.1" ', "")
+    # command = command.replace('"torch==1.8.1" ', "")
     return command
 
 
@@ -36,7 +36,6 @@ def get_match(text, command):
 
 command = r"""
 pip install -f https://pytorch-geometric.com/whl/torch-1.8.0+cu101.html --default-timeout=600 \
-    "torch==1.8.1" \
     "transformers==3.3.1" \
     "torch-scatter==2.0.6" \
     "torch-sparse==0.6.9" \
