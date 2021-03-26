@@ -342,23 +342,10 @@ test-pip-install:
   stage: custom
   image:
     name: python:3.8-buster
-  variables:
-    PROTEIN_STRUCTURE_URL: "https://files.rcsb.org/download/2MZX.pdb"
-    PROTEIN_SEQUENCE: "QYQFWKNFQT"
-    MUTATIONS: "W5A,W5G"
   script:
-    # Install
     - PIP_INSTALL_CMD=$(./scripts/get_pip_install_cmd.py)
     - eval "${PIP_INSTALL_CMD}"
     - python -m elaspic2 --help
-    # Evaluate a single mutation
-    - export PROTEIN_STRUCTURE="$(basename ${PROTEIN_STRUCTURE_URL})"
-    - wget --no-verbose "${PROTEIN_STRUCTURE_URL}" -O "${PROTEIN_STRUCTURE}" || true
-    - >
-      python -m elaspic2 
-      --protein-structure="${PROTEIN_STRUCTURE}"
-      --protein-sequence="${PROTEIN_SEQUENCE}"
-      --mutations="${MUTATIONS}"
   only:
     variables:
       - $TEST_PIP_INSTALL
