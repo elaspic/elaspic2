@@ -343,10 +343,9 @@ test-pip-install:
   image:
     name: python:3.8-buster
   variables:
-    PROTEIN_STRUCTURE_URL: "https://files.rcsb.org/download/1MFG.pdb"
-    PROTEIN_SEQUENCE: "GSMEIRVRVEKDPELGFSISGGVGGRGNPFRPDDDGIFVTRVQPEGPASKLLQPGDKIIQANGYSFINIEHGQAVSLLKTFQNTVELIIVREVSS"
-    MUTATIONS: "G1A.G1C"
-    LIGAND_SEQUENCE: "EYLGLDVPV"
+    PROTEIN_STRUCTURE_URL: "https://files.rcsb.org/download/2MZX.pdb"
+    PROTEIN_SEQUENCE: "QYQFWKNFQT"
+    MUTATIONS: "W5A,W5G"
   script:
     # Install
     - PIP_INSTALL_CMD=$(./scripts/get_pip_install_cmd.py)
@@ -360,7 +359,6 @@ test-pip-install:
       --protein-structure="${PROTEIN_STRUCTURE}"
       --protein-sequence="${PROTEIN_SEQUENCE}"
       --mutations="${MUTATIONS}"
-      --ligand-sequence="${LIGAND_SEQUENCE}"
   only:
     variables:
       - $TEST_PIP_INSTALL
