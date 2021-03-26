@@ -30,7 +30,7 @@ def get_match(text, command):
 
 
 command = r"""
-pip install "torch==1.8.1";
+pip install "torch==1.8.0";
 pip install -f https://pytorch-geometric.com/whl/torch-1.8.0+cu101.html --default-timeout=600 \
     "transformers==3.3.1" \
     "torch-scatter==2.0.6" \
