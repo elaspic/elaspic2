@@ -28,7 +28,7 @@ See other notebooks in the [`notebooks/`](https://gitlab.com/elaspic/elaspic2/-/
 
 ### REST API
 
-`ELASPIC2` is accessible through a REST API, documented at: <https://elaspic2-api.proteinsolver.org/docs>.
+`ELASPIC2` is accessible through a REST API, documented at: <http://elaspic.kimlab.org/api/v2/docs>.
 
 The following code snippet shows how the REST API can be used from within Python.
 
@@ -37,7 +37,7 @@ import json
 import time
 import requests
 
-ELASPIC2_JOBS_API = "https://elaspic2-api.proteinsolver.org/jobs/"
+ELASPIC2_JOBS_API = "http://elaspic.kimlab.org/api/v2/jobs/"
 
 mutation_info = {
     "protein_structure_url": "https://files.rcsb.org/download/1MFG.pdb",
